@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/플랫폼 자동사냥 | Soul's 자동사냥포털</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #020617; color: #e2e8f0; }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-6xl mx-auto">
+    <nav class="mb-8">
+        <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+            <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
+                <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
+                <a href="valuation_semi.html" class="text-sky-400 font-bold border-b-2 border-sky-400">종목분석</a>
+            </div>
+        </div>
+        <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+            <a href="valuation_semi.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">반도체주</a>
+            <a href="valuation_defense.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">방산주</a>
+            <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+            <a href="valuation_ai.html" class="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/50">AI/플랫폼</a>
+        </div>
+    </nav>
+
+    <header class="mb-12">
+        <h1 class="text-4xl font-bold mb-2">AI/플랫폼 자동사냥</h1>
+        <p class="text-slate-400">Deep Valuation Report | 2026. 04. 08. 16:16</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2 glass-card p-8 rounded-3xl">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <span class="w-1 h-8 bg-sky-500 rounded-full"></span>
+                지능형 플랫폼 밸류에이션 (2026 Consensus)
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="text-slate-400 border-b border-slate-700 text-left">
+                            <th class="pb-4">종목 (Ticker)</th>
+                            <th class="pb-4">26년 매출액(E)</th>
+                            <th class="pb-4">가중 적정가</th>
+                            <th class="pb-4">핵심 동력</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800">
+                        <tr>
+                            <td class="py-5">
+                                <div class="font-bold text-lg">NAVER</div>
+                                <div class="text-xs text-slate-500">035420.KS</div>
+                            </td>
+                            <td class="py-5 text-indigo-400">13.5조+</td>
+                            <td class="py-5 text-emerald-400 font-bold">400,000원</td>
+                            <td class="py-5 text-slate-300">AI 쇼핑 에이전트</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5">
+                                <div class="font-bold text-lg">카카오</div>
+                                <div class="text-xs text-slate-500">035720.KS</div>
+                            </td>
+                            <td class="py-5 text-indigo-400">9.8조+</td>
+                            <td class="py-5 text-emerald-400 font-bold">85,000원</td>
+                            <td class="py-5 text-slate-300">카나(Kanna) AI</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5">
+                                <div class="font-bold text-lg">Microsoft</div>
+                                <div class="text-xs text-slate-500">MSFT.US</div>
+                            </td>
+                            <td class="py-5 text-indigo-400">$300B+</td>
+                            <td class="py-5 text-emerald-400 font-bold">$496.79</td>
+                            <td class="py-5 text-slate-300">Azure AI Scaling</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="glass-card p-8 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6 text-center">AI Monetization Phase</h2>
+            <div class="relative h-48 w-full flex items-end justify-around pb-8">
+                <div class="w-12 bg-slate-700 rounded-t-lg h-1/4 relative">
+                    <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] whitespace-nowrap">Infra</span>
+                </div>
+                <div class="w-12 bg-slate-600 rounded-t-lg h-2/4 relative">
+                    <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] whitespace-nowrap">Model</span>
+                </div>
+                <div class="w-12 bg-sky-500 rounded-t-lg h-3/4 relative">
+                    <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold whitespace-nowrap">Agent</span>
+                </div>
+                <div class="w-12 bg-indigo-500 rounded-t-lg h-full relative">
+                    <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold whitespace-nowrap">Profit</span>
+                </div>
+            </div>
+            <p class="text-[10px] text-slate-500 text-center mt-2">현재 'Agent' 단계에서 'Profit'으로 진입 중</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-sky-500">
+            <h3 class="font-bold mb-4 text-sky-400">[핵심 투자 포인트]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span><b>어텐션에서 액션으로:</b> 단순히 정보를 찾는 검색에서 작업을 수행하는 에이전트로 진화</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>B2B 클라우드:</b> 기업들의 자체 거대언어모델(LLM) 구축 수요에 따른 GPU 클라우드 매출 급증</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>구독 모델 안착:</b> AI 기능을 유료화한 멤버십(네이버 플러스, 코파일럿) 가입자 수 증가</span></li>
+            </ul>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-indigo-500">
+            <h3 class="font-bold mb-4 text-indigo-400">[2026 시나리오 분석]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span><b>낙관:</b> AI 검색 광고 단가 급등 및 서드파티 에이전트 생태계 장악</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>기본:</b> 광고 시장 둔화를 AI 서비스 유료화 매출로 상쇄하며 완만한 성장</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>비관:</b> 규제 당국의 독과점 방지법 및 AI 저작권 관련 대규모 소송 리스크</span></li>
+            </ul>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-rose-500">
+            <h3 class="font-bold mb-4 text-rose-400">[리스크 요인]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span><b>Capex 부담:</b> AI 데이터센터 및 GPU 확보를 위한 대규모 설비 투자 지속에 따른 현금 흐름 악화</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>오픈 소스의 역습:</b> Llama 등 강력한 오픈 소스 모델 확산으로 독점적 지위 약화</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>성능 한계:</b> 할루시네이션(환각) 문제 미해결에 따른 서비스 신뢰도 저하</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="mt-16 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs">
+        <p>Data Source: Gartner, IDC, Naver Finance, Microsoft IR (Real-time)</p>
+        <p class="mt-2">Last Portal Update: 2026-04-08 16:16</p>
+        <p class="mt-4 font-bold text-slate-400">© 2026 Soul Insight Portal. Built for the Hunt.</p>
+    </footer>
+</body>
+</html>

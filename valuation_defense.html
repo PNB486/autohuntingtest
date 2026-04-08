@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방산주 자동사냥 | Soul's 자동사냥포털</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #020617; color: #e2e8f0; }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg { background: linear-gradient(rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.6)), url('https://images.unsplash.com/photo-1564613400280-372370007fe3'); background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-6xl mx-auto">
+    <nav class="mb-8">
+        <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+            <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
+                <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
+                <a href="valuation_semi.html" class="text-sky-400 font-bold border-b-2 border-sky-400">종목분석</a>
+            </div>
+        </div>
+        <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+            <a href="valuation_semi.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">반도체주</a>
+            <a href="valuation_defense.html" class="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/50">방산주</a>
+            <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+            <a href="valuation_ai.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">AI/플랫폼</a>
+        </div>
+    </nav>
+
+    <header class="mb-12 hero-bg p-12 rounded-3xl border border-slate-700/50">
+        <h1 class="text-5xl font-black mb-2 italic">방산주 자동사냥</h1>
+        <p class="text-slate-300 font-bold">K-Defense: The Global Security Hub | 2026. 04. 08.</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2 glass-card p-8 rounded-3xl">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <span class="w-1 h-8 bg-sky-500 rounded-full"></span>
+                지정학적 수혜주 밸류에이션 (2026E)
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="text-slate-400 border-b border-slate-700 text-left">
+                            <th class="pb-4">종목 (Ticker)</th>
+                            <th class="pb-4">26년 영업이익(E)</th>
+                            <th class="pb-4">가중 적정가</th>
+                            <th class="pb-4">현재가 대비</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800">
+                        <tr>
+                            <td class="py-5">
+                                <div class="font-bold text-lg">한화에어로스페이스</div>
+                                <div class="text-xs text-slate-500">012450.KS</div>
+                            </td>
+                            <td class="py-5 text-indigo-400">4.7조</td>
+                            <td class="py-5 text-emerald-400 font-bold">1,557,857원</td>
+                            <td class="py-5 text-rose-400">강력 저평가</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5">
+                                <div class="font-bold text-lg">LIG넥스원</div>
+                                <div class="text-xs text-slate-500">079550.KS</div>
+                            </td>
+                            <td class="py-5 text-indigo-400">0.75조</td>
+                            <td class="py-5 text-emerald-400 font-bold">570,000원</td>
+                            <td class="py-5 text-rose-400">상승여력 40%+</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5">
+                                <div class="font-bold text-lg">Lockheed Martin</div>
+                                <div class="text-xs text-slate-500">LMT.US</div>
+                            </td>
+                            <td class="py-5 text-indigo-400">$9.5B</td>
+                            <td class="py-5 text-emerald-400 font-bold">$550.00</td>
+                            <td class="py-5 text-sky-400">적정 수준</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="glass-card p-8 rounded-3xl">
+            <h2 class="text-xl font-bold mb-6 text-center">Quarterly Profit Trend</h2>
+            <canvas id="profitChart" height="250"></canvas>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-sky-500">
+            <h3 class="font-bold mb-4 text-sky-400">[핵심 투자 포인트]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span><b>수주 잔고의 질적 변화:</b> 단순 수출에서 현지 생산 및 유지보수(MRO) 계약으로 확대</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>중동발 잭팟:</b> 천궁-II의 사우디/UAE 수출 물량 본격 매출 인식 단계 진입</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>우주 항공 모멘텀:</b> 한화의 독자 엔진 및 위성 사업 가시화로 멀티플 재평가</span></li>
+            </ul>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-indigo-500">
+            <h3 class="font-bold mb-4 text-indigo-400">[2026 시나리오 분석]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span><b>낙관:</b> 루마니아, 폴란드 2차 계약 완료 시 한화에어로 180만원 돌파</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>기본:</b> 현재 수주 물량 베이스로 연 20% 영업이익 성장 지속</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>비관:</b> 글로벌 분쟁의 완전 종식(Low Probability) 시 수주 절벽 우려</span></li>
+            </ul>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-rose-500">
+            <h3 class="font-bold mb-4 text-rose-400">[리스크 요인]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span><b>정치적 변수:</b> 미 대선 후 우크라이나 지원 중단 시 유럽 방산 수요 위축 가능성</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>수출 규제:</b> 핵심 기술 이전에 대한 정부 허가 및 통제 강화 리스크</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>원자재가:</b> 특수강 및 희귀 금속 가격 상승에 따른 마진 압박</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="mt-16 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs">
+        <p>Data Source: KRX, LIG Research, Lockheed Martin IR (Real-time)</p>
+        <p class="mt-2">Last Portal Update: 2026-04-08 16:16</p>
+        <p class="mt-4 font-bold text-slate-400">© 2026 Soul Insight Portal. Built for the Hunt.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('profitChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['25.1Q', '25.2Q', '25.3Q', '25.4Q(E)', '26.1Q(E)'],
+                datasets: [{
+                    label: '한화에어로 OP (천억)',
+                    data: [3.8, 4.2, 5.1, 6.5, 7.8],
+                    backgroundColor: 'rgba(56, 189, 248, 0.6)',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+                    y: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#94a3b8' } }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

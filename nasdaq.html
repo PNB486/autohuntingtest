@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해외증시 자동사냥 | Soul's 자동사냥포털</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #020617; color: #e2e8f0; }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-6xl mx-auto">
+    <nav class="mb-8">
+        <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+            <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
+                <a href="nasdaq.html" class="text-sky-400 font-bold border-b-2 border-sky-400">해외증시</a>
+                <a href="valuation_semi.html" class="hover:text-sky-400 transition-colors">종목분석</a>
+            </div>
+        </div>
+        <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+            <a href="valuation_semi.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">반도체주</a>
+            <a href="valuation_defense.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">방산주</a>
+            <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+            <a href="valuation_ai.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">AI/플랫폼</a>
+        </div>
+    </nav>
+
+    <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold mb-2">해외증시 자동사냥</h1>
+        <p class="text-slate-400">미국 주식 시장 현황 | 2026. 04. 08. 16:16</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center">
+            <div class="text-slate-400 text-sm mb-1">NASDAQ</div>
+            <div class="text-2xl font-bold text-sky-400">22,017.85</div>
+            <div class="text-sky-400 text-xs mt-1">▲ 21.51 (+0.10%)</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center">
+            <div class="text-slate-400 text-sm mb-1">S&P 500</div>
+            <div class="text-2xl font-bold text-sky-400">6,616.85</div>
+            <div class="text-sky-400 text-xs mt-1">▲ 5.02 (+0.08%)</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center">
+            <div class="text-slate-400 text-sm mb-1">미 10년물 금리</div>
+            <div class="text-2xl font-bold text-rose-400">4.342%</div>
+            <div class="text-rose-400 text-xs mt-1">▲ 0.008 (상승)</div>
+        </div>
+        <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center">
+            <div class="text-slate-400 text-sm mb-1">VIX 공포지수</div>
+            <div class="text-2xl font-bold text-rose-400">25.78</div>
+            <div class="text-rose-400 text-xs mt-1">▲ 1.61 (+6.66%)</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div class="glass-card p-6 rounded-2xl">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <span class="w-1 h-6 bg-sky-500 rounded-full"></span>
+                주요 지수 추이 (Index Trends)
+            </h2>
+            <canvas id="indexChart" height="200"></canvas>
+        </div>
+        <div class="glass-card p-6 rounded-2xl">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <span class="w-1 h-6 bg-indigo-500 rounded-full"></span>
+                Top 5 NASDAQ Stocks
+            </h2>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center p-3 bg-slate-800/40 rounded-xl">
+                    <span class="font-bold">NVIDIA (NVDA)</span>
+                    <span class="text-rose-400">+2.45%</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-slate-800/40 rounded-xl">
+                    <span class="font-bold">Microsoft (MSFT)</span>
+                    <span class="text-rose-400">+1.12%</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-slate-800/40 rounded-xl">
+                    <span class="font-bold">Alphabet (GOOGL)</span>
+                    <span class="text-sky-400">-0.45%</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-slate-800/40 rounded-xl">
+                    <span class="font-bold">Tesla (TSLA)</span>
+                    <span class="text-rose-400">+0.85%</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-slate-800/40 rounded-xl">
+                    <span class="font-bold">Apple (AAPL)</span>
+                    <span class="text-sky-400">-0.21%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-sky-500">
+            <h3 class="font-bold mb-4 text-sky-400">[핵심 투자 포인트]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span>엔비디아 중심의 AI 인프라 투자 지속 및 실적 기대감 유효</span></li>
+                <li class="flex gap-2"><span>•</span> <span>중동 지정학적 위기 속 '잠정 휴전' 소식에 안도 랠리 가능성</span></li>
+                <li class="flex gap-2"><span>•</span> <span>금리 고공행진에도 불구하고 빅테크 기업들의 강력한 현금 흐름 부각</span></li>
+            </ul>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-indigo-500">
+            <h3 class="font-bold mb-4 text-indigo-400">[2026 시나리오 분석]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span><b>낙관:</b> 나스닥 25,000 돌파. AI가 실제 생산성 향상으로 증명되는 해</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>기본:</b> 22,000선 주변 기간 조정 후 우상향 추세 유지</span></li>
+                <li class="flex gap-2"><span>•</span> <span><b>비관:</b> 인플레이션 재점화로 인한 'High for Longer' 금리 정책 장기화</span></li>
+            </ul>
+        </div>
+        <div class="glass-card p-6 rounded-2xl border-t-4 border-rose-500">
+            <h3 class="font-bold mb-4 text-rose-400">[리스크 요인]</h3>
+            <ul class="text-sm space-y-3 text-slate-300">
+                <li class="flex gap-2"><span>•</span> <span>VIX 지수 상승(25.78)은 시장 내 여전한 불안 심리를 반영</span></li>
+                <li class="flex gap-2"><span>•</span> <span>미국 대선 결과에 따른 보조금 및 규제 환경의 급격한 변화 가능성</span></li>
+                <li class="flex gap-2"><span>•</span> <span>중동 휴전 불확실성 (일시적 조치일 수 있다는 의구심)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="mt-16 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs">
+        <p>Data Source: Google Finance, Morningstar, CBOE (Real-time)</p>
+        <p class="mt-2">Last Portal Update: 2026-04-08 16:16</p>
+        <p class="mt-4 font-bold text-slate-400">© 2026 Soul Insight Portal. Built for the Hunt.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('indexChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['03-01', '03-15', '04-01', '04-07'],
+                datasets: [{
+                    label: 'NASDAQ',
+                    data: [20500, 21200, 21900, 22017],
+                    borderColor: '#38bdf8',
+                    tension: 0.3,
+                    fill: false
+                }, {
+                    label: 'S&P 500',
+                    data: [6200, 6400, 6550, 6616],
+                    borderColor: '#818cf8',
+                    tension: 0.3,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } },
+                    y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

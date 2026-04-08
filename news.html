@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Soul's 뉴스 자동사냥</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { background-color: #0f172a; color: #f1f5f9; font-family: 'Pretendard', sans-serif; }
+        .card { background-color: #1e293b; border: 1px solid #334155; transition: transform 0.2s ease; cursor: pointer; }
+        .card:hover { transform: scale(1.02); }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-link { transition: color 0.2s; }
+        .nav-link:hover { color: #38bdf8; }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- 네비게이션 메뉴 바 -->
+        <nav class="flex justify-between items-center mb-8 px-4 py-3 bg-slate-800/50 rounded-2xl border border-slate-700">
+            <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </a>
+                <a href="news.html" class="text-sky-400">News</a>
+                <a href="kospi.html" class="nav-link">KOSPI</a>
+                <a href="nasdaq.html" class="nav-link">NASDAQ</a>
+                <a href="valuation_semi.html" class="nav-link">Valuation</a>
+            </div>
+        </nav>
+
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-2 gradient-text">Soul's 뉴스 자동사냥</h1>
+            <p class="text-slate-400 text-lg">주요 분야 최신 뉴스 실시간 자동사냥 | 2026년 4월 8일 16:14</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/015/0005272352', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/015/2026/04/08/5272352.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="정원오 &quot;박원순·오세훈 시장 똑같다&quot; 발언 결국 사과" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">정치</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">정원오 "박원순·오세훈 시장 똑같다" 발언 결국 사과</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">더불어민주당 서울시장 예비후보인 정원오 전 성동구청장이 '박원순 전 시장과 오세훈 시장이 똑같다'고 한 자신의 발언과 관련해 공식 사과했다. 비교 발언으로 상처를 받은 이들에게 고개를 숙이면서도 자신이 전하려던 취지</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/028/0002799703', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/028/2026/04/08/2799703.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="주호영 “무소속 출마, 항고심 보고 판단…장동혁 당 인정 못해”" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">정치</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">주호영 “무소속 출마, 항고심 보고 판단…장동혁 당 인정 못해”</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">국민의힘 6·3 지방선거 대구시장 경선에서 공천 배제(컷오프)된 주호영 의원이 8일 “항고심 판단을 끝까지 지켜본 뒤, 제 거취에 대한 최종 판단을 내리겠다”고 했다. 또 “비상대책위원회든 선거대책위원회든, 당을 다</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/018/0006252886', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/018/2026/04/08/6252886.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="SK이노 울산CLX, 지역 사회복지사 위한 유류비 1억원 지원" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">경제</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">SK이노 울산CLX, 지역 사회복지사 위한 유류비 1억원 지원</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">SK이노베이션 울산Complex(이하 울산CLX)는 8일 중동 상황 장기화에 따른 국내 고유가 상황 속에서 어려움을 겪고 있는 지역 사회복지 현장을 돕기 위해 사회복지시설 유류비 1억 원을 지원한다고 밝혔다. 전달된</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/055/0001346912', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/055/2026/04/08/1346912.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="'빚투' 영향에 가계대출 넉 달 만에 증가…3월 5천억 원↑" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">경제</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">'빚투' 영향에 가계대출 넉 달 만에 증가…3월 5천억 원↑</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">▲ 휴전으로 주식 급등 지난달 정부의 강도 높은 부동산 대출 규제에도 은행권 가계대출이 넉 달 만에 증가세로 돌아섰습니다. 이란 전쟁 여파로 증시 변동성이 커지면서 빚을 내 주식에 투자하는 수요가 늘어 신용대출 등</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/018/0006252656', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/018/2026/04/08/6252656.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="카카오뱅크 “스테이블코인 발행·유통 주도, WM·AI 뱅크로 진화”" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">경제</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">카카오뱅크 “스테이블코인 발행·유통 주도, WM·AI 뱅크로 진화”</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">윤호영 카카오뱅크 대표. 사진=카카오뱅크 제공 윤호영 카카오뱅크 대표가 올해 카카오뱅크의 경영 키워드로 ‘자산관리(WM)’와 ‘인공지능(AI) 기반 은행’을 제시했다. 돈을 보내고 받는 은행에서 돈을 쓰고 불리는 결</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/088/0001004621', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/088/2026/04/08/1004621.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="미국-이란, 2주간의 '휴전 및 호르무즈 개방' 사실상 합의" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">세계</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">미국-이란, 2주간의 '휴전 및 호르무즈 개방' 사실상 합의</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">도널드 트럼프 미국 대통령이 발표한 대로 이란도 양국이 2주간 휴전에 동의했다고 확인했다. 7일(현지시간) 뉴욕타임스(NYT)와 로이터통신에 따르면 이란 최고 국가안보회의는 이날 성명에서 이란이 미국, 이스라엘과의</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/021/0002783075', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/021/2026/04/08/2783075.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="휴전 소식에 국제 유가 18% 급락중…100달러 아래로" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">세계</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">휴전 소식에 국제 유가 18% 급락중…100달러 아래로</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">지난 6일 백악관에서 도널드 트럼프 미국 대통령이 연설하고 있다. 로이터통신 연합뉴스 미국과 이란의 극적인 2주간 휴전 소식이 전해지며 3거래일 연속 상승하던 서부텍사스산원유(WTI)가 18% 급락하는 등 유가가 급</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/001/0016009877', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/001/2026/04/08/16009877.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="버스 타고 '실감 콘텐츠' 관람…경주시, XR 관광버스 무료운행" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">IT/과학</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">버스 타고 '실감 콘텐츠' 관람…경주시, XR 관광버스 무료운행</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">경북 경주시는 확장현실(XR) 기술을 활용한 관광버스를 운행한다고 8일 밝혔다. '골든 신라 경주 XR 버스'는 이동 수단에 확장현실 기술을 접목해 탑승 과정 자체를 새로운 체험으로 확대했다. 탑승객은 버스 이동 중</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/243/0000095909', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/243/2026/04/07/95909.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="트럼프, 달 탐사 비행사들과 통화에서 “화성 진출할 것”" loading="lazy">
+        <div class="p-5">
+            <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 block">IT/과학</span>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">트럼프, 달 탐사 비행사들과 통화에서 “화성 진출할 것”</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">미국 항공우주국(NASA)의 유인 달 탐사선 아르테미스 2호가 달 근접 비행을 마치고 지구 귀환 궤도에 진입했다. 이번 임무에서 우주비행사들은 달 뒷면을 맨눈으로 관측하고 인류 역사상 가장 먼 거리까지 비행하며 기록</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+        </div>
+
+        <footer class="mt-12 text-center text-slate-500 text-sm">
+            © 2026 Soul's 자동사냥포털. All analytical models are powered by Gemini Flash.
+        </footer>
+    </div>
+</body>
+</html>
