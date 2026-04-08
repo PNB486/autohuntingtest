@@ -2,8 +2,14 @@ name: Auto Hunt Scheduler
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # UTC 기준 3시간마다 실행 (약 0시, 3시, 6시...)
+    - cron: '0 */3 * * *' # UTC 기준 3시간마다 실행
   workflow_dispatch: # 수동 실행 버튼 추가
+
+# 배포를 위한 권한 설정
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -35,3 +41,16 @@ jobs:
           git add .
           git commit -m "Auto-update: News Hunted via GitHub Actions" || echo "No changes to commit"
           git push
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    # environment: github-pages  # 이 줄을 제외하여 배포 이력(Deployments)에 기록이 남지 않게 함
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
