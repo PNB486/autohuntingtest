@@ -14,6 +14,11 @@ This project is an automated financial analysis and news aggregation portal desi
   - `valuation_*.html`: Deep-dive valuation reports (Semi, Defense, Battery, AI).
 
 ## 🛡️ Reliability & Design Mandates
+- **Encoding & Validation (CRITICAL)**:
+  - All HTML files **MUST** be saved in **UTF-8 (No BOM)** encoding.
+  - **Never** read or write HTML files using system default encodings (CP949/EUC-KR).
+  - Always use `chcp 65001` in batch scripts and specify `utf8` in PowerShell/Python/Node.js.
+  - **Mandatory Validation**: Every `0SoulAutoHunt.bat` run **MUST** execute `scripts/revalidate_portal.py` to check for mojibake before any Git operations.
 - **Dark Tone Theme**: All reports must strictly follow the `index.html` aesthetic:
   - **Background**: #020617 (Slate 950)
   - **Card BG**: #0f172a (Slate 900) | **Card Border**: #1e293b (Slate 800)
