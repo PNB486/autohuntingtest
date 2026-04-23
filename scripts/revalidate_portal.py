@@ -37,9 +37,20 @@ def validate_file(file_path):
                 print(f"  [ERROR] Mojibake detected in {file_path}: Found '{pattern}'")
                 return False
         
-        # 3. Check for '?' where Korean characters should be
-        # (This is tricky as ? is a valid char, but too many in a row is suspicious)
-        # For now, rely on specific patterns.
+        # 3. Check for mandatory background color
+        if '#020617' not in content:
+            print(f"  [ERROR] Mandatory background color (#020617) not found in {file_path}")
+            return False
+
+        # 4. Check for gradient shorthand issue (Should use background-image for .hero-gradient)
+        if '.hero-gradient' in content and 'background:' in content and 'radial-gradient' in content:
+            # This is a simple check; a more robust one would use regex or a parser
+            if 'background-image:' not in content and 'background:' in content:
+                 print(f"  [WARNING] .hero-gradient might be using 'background' shorthand instead of 'background-image' in {file_path}")
+                 # Only error if we are sure it's the wrong usage
+                 if 'background: radial-gradient' in content:
+                    print(f"  [ERROR] .hero-gradient uses 'background' shorthand which resets background-color. Use 'background-image' instead.")
+                    return False
         
         print(f"  [OK] {file_path} is valid.")
         return True

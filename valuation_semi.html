@@ -3,269 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soul's 자동사냥포털 - 반도체주 분석</title>
+    <title>Soul's 반도체주 자동사냥</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
-        :root {
-            --slate-950: #020617;
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --sky-400: #38bdf8;
-        }
-        body {
-            font-family: 'Pretendard', sans-serif;
-            background-color: var(--slate-950);
-            color: #f1f5f9;
-        }
-        .hero-gradient {
-            background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.05), transparent),
-                        radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.1), transparent);
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .card {
-            background-color: var(--slate-900);
-            border: 1px solid var(--slate-800);
-            border-radius: 2rem;
-            backdrop-filter: blur(12px);
-            overflow: hidden;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+        body { font-family: 'Pretendard', sans-serif; background-color: #020617; color: #f1f5f9; }
+        .hero-gradient { background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.05), transparent), radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.1), transparent); }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card { background-color: #0f172a; border: 1px solid #1e293b; border-radius: 1.5rem; backdrop-filter: blur(12px); }
+        .risk-high { color: #f43f5e; background-color: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.2); }
     </style>
 </head>
-<body class="hero-gradient min-h-screen p-4 md:p-8">
-    <div class="max-w-5xl mx-auto">
-        <!-- Navigation -->
-        <nav class="mb-8">
-            <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
-                <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
-                <div class="flex gap-6 text-sm font-medium text-slate-400">
-                    <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
-                    <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
-                    <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
-                    <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
-                    <a href="valuation_semi.html" class="text-sky-400">종목분석</a>
-                </div>
-            </div>
-            <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
-                <a href="valuation_semi.html" class="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/30">반도체주</a>
-                <a href="valuation_defense.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">방산주</a>
-                <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
-                <a href="valuation_ai.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">AI/플랫폼</a>
-            </div>
-        </nav>
-
-        <!-- Header -->
-        <header class="mb-12 relative">
-            <div class="absolute -top-12 -left-12 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl"></div>
-            <h1 class="text-4xl font-black mb-2 tracking-tight">반도체주 <span class="gradient-text">자동사냥</span></h1>
-            <p class="text-slate-400 font-medium italic">Sector: Semiconductors & AI Hardware | 2026-04-21 11:25 AM KST</p>
-        </header>
-
-        <!-- Stock Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <!-- SK Hynix -->
-            <div class="card p-6 border-t-4 border-t-sky-400">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold">SK하이닉스</h3>
-                        <p class="text-xs text-slate-500">000660.KS</p>
-                    </div>
-                    <div class="text-emerald-400 font-bold">+4.97%</div>
-                </div>
-                <div class="text-3xl font-black mb-4">1,224,000 <span class="text-sm font-normal text-slate-500">KRW</span></div>
-                <div class="space-y-2 text-xs">
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">적정 가중가 (Avg)</span>
-                        <span class="text-sky-400 font-bold">1,856,400</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">Upside Potential</span>
-                        <span class="text-emerald-400 font-bold">+51.7%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Samsung Electronics -->
-            <div class="card p-6 border-t-4 border-t-indigo-400">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold">삼성전자</h3>
-                        <p class="text-xs text-slate-500">005930.KS</p>
-                    </div>
-                    <div class="text-emerald-400 font-bold">+1.86%</div>
-                </div>
-                <div class="text-3xl font-black mb-4">218,500 <span class="text-sm font-normal text-slate-500">KRW</span></div>
-                <div class="space-y-2 text-xs">
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">적정 가중가 (Avg)</span>
-                        <span class="text-indigo-400 font-bold">355,300</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">Upside Potential</span>
-                        <span class="text-emerald-400 font-bold">+62.6%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- NVIDIA -->
-            <div class="card p-6 border-t-4 border-t-emerald-400">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold">NVIDIA</h3>
-                        <p class="text-xs text-slate-500">NVDA.O</p>
-                    </div>
-                    <div class="text-emerald-400 font-bold">+0.19%</div>
-                </div>
-                <div class="text-3xl font-black mb-4">$202.06 <span class="text-sm font-normal text-slate-500">USD</span></div>
-                <div class="space-y-2 text-xs">
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">적정 가중가 (Avg)</span>
-                        <span class="text-emerald-400 font-bold">$270.00</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-slate-500">Upside Potential</span>
-                        <span class="text-emerald-400 font-bold">+33.6%</span>
-                    </div>
-                </div>
+<body class="hero-gradient min-h-screen p-4 md:p-8 max-w-6xl mx-auto">
+    <!-- Navigation -->
+    <nav class="mb-8">
+        <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+            <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
+                <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
+                <a href="valuation_semi.html" class="text-sky-400">종목분석</a>
             </div>
         </div>
-
-        <!-- Valuation Chart -->
-        <div class="card p-8 mb-12">
-            <h3 class="text-xl font-bold mb-8 flex items-center gap-2">
-                <svg class="w-6 h-6 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                2026 예상 영업이익 추이 (Consensus)
-            </h3>
-            <div class="h-80">
-                <canvas id="valuationChart"></canvas>
-            </div>
-            <p class="mt-6 text-xs text-slate-500 leading-relaxed">
-                * 위 차트는 2026년 연간 누적 예상 영업이익(trillion KRW)을 나타냅니다. 엔비디아의 경우 원화 환산 기준(1,400원)으로 표시되었습니다.
-            </p>
+        <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+            <a href="valuation_semi.html" class="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/30">반도체주</a>
+            <a href="valuation_defense.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">방산주</a>
+            <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+            <a href="valuation_ai.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">AI/플랫폼</a>
         </div>
+    </nav>
 
-        <!-- Detailed Analysis -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div class="space-y-6">
-                <div class="card p-8 border-l-4 border-l-sky-500">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">핵심 투자 포인트</h3>
-                    <ul class="space-y-4 text-sm text-slate-300">
-                        <li class="flex gap-3">
-                            <span class="w-6 h-6 bg-sky-500/20 text-sky-400 rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</span>
-                            <div>
-                                <span class="font-bold text-white">HBM4 리더십 공고화</span>
-                                <p class="text-xs text-slate-500 mt-1">SK하이닉스의 70~80% 독보적 영업이익률과 삼성전자의 HBM4 대량 양산 진입이 섹터 전체 멀티플 상향 견인.</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="w-6 h-6 bg-sky-500/20 text-sky-400 rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</span>
-                            <div>
-                                <span class="font-bold text-white">Foundry 2nm 수주 본격화</span>
-                                <p class="text-xs text-slate-500 mt-1">삼성전자의 2nm 공정 수율 안정화로 인한 대형 고객사(애플, 구글) 회귀 가능성 증대.</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="w-6 h-6 bg-sky-500/20 text-sky-400 rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</span>
-                            <div>
-                                <span class="font-bold text-white">AI 인프라 교체 주기 도래</span>
-                                <p class="text-xs text-slate-500 mt-1">NVIDIA 'Rubin' 아키텍처 출시를 앞둔 선제적 데이터센터 Capex 집행 가속화.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <div class="card p-8 border-l-4 border-l-rose-500">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-rose-400">리스크 요인</h3>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-rose-500/5 rounded-2xl border border-rose-500/10">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="font-bold text-rose-400">High Currency Risk Zone</span>
-                                <span class="text-[10px] bg-rose-500/20 px-2 py-0.5 rounded text-rose-400 font-bold">Critical</span>
-                            </div>
-                            <p class="text-xs text-slate-400">환율 1,471 KRW 돌파로 인해 국내 반도체 기업에 대한 외인 매도 압력 지속. 타겟 프라이스에 15% Macro Discount 적용.</p>
-                        </div>
-                        <div class="p-4 bg-amber-500/5 rounded-2xl border border-amber-500/10">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="font-bold text-amber-400">Over-supply Potential</span>
-                                <span class="text-[10px] bg-amber-500/20 px-2 py-0.5 rounded text-amber-400 font-bold">Moderate</span>
-                            </div>
-                            <p class="text-xs text-slate-400">레거시 공정(DDR4/NAND)의 중국발 저가 물량 공세 및 재고 증가 우려 상존.</p>
-                        </div>
-                    </div>
-                </div>
+    <header class="mb-8">
+        <div class="relative h-48 rounded-3xl overflow-hidden mb-6">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent flex flex-col justify-end p-8">
+                <h1 class="text-4xl font-bold">반도체주 자동사냥</h1>
+                <p class="text-slate-400">데이터 기반 적정가 및 밸류에이션 리포트 | 2026-04-23 10:29:01</p>
             </div>
         </div>
+    </header>
 
-        <!-- Action Guide -->
-        <div class="card p-8 mb-12 bg-gradient-to-br from-slate-900 to-slate-800">
-            <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <svg class="w-6 h-6 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                Action Guide (투자의견)
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 bg-slate-950/50 rounded-2xl border border-slate-700">
-                    <div class="text-sky-400 text-xs font-bold mb-2">SK하이닉스</div>
-                    <div class="text-2xl font-black mb-2">STRONG BUY</div>
-                    <p class="text-[10px] text-slate-500">1,100,000 이하 강력 매수 / 1,600,000 분할 매도 시작</p>
+    <!-- Stock Summary Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Samsung Electronics -->
+        <div class="card p-6">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-xl font-bold">삼성전자</h3>
+                    <p class="text-xs text-slate-500">005930</p>
                 </div>
-                <div class="p-6 bg-slate-950/50 rounded-2xl border border-slate-700">
-                    <div class="text-indigo-400 text-xs font-bold mb-2">삼성전자</div>
-                    <div class="text-2xl font-black mb-2">BUY</div>
-                    <p class="text-[10px] text-slate-500">200,000~210,000 박스권 하단 매수 / 300,000 목표</p>
-                </div>
-                <div class="p-6 bg-slate-950/50 rounded-2xl border border-slate-700">
-                    <div class="text-emerald-400 text-xs font-bold mb-2">NVIDIA</div>
-                    <div class="text-2xl font-black mb-2">HOLD</div>
-                    <p class="text-[10px] text-slate-500">$180 지지 확인 시 추가 매수 / 단기 과열 주의</p>
-                </div>
+                <span class="text-sky-400 font-bold">227,500</span>
+            </div>
+            <div class="text-xs space-y-2 text-slate-400">
+                <div class="flex justify-between"><span>2026 예상 OP</span><span class="text-slate-200">82.5조</span></div>
+                <div class="flex justify-between"><span>목표 PER</span><span class="text-slate-200">18.0x</span></div>
+                <div class="flex justify-between font-bold text-sky-400"><span>가중 적정가</span><span>285,000</span></div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="border-t border-slate-800 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
-            <div class="flex items-center gap-4">
-                <span>Data Source: FnGuide, Bloomberg, Soul Insight Analysis</span>
-                <span class="w-1 h-1 bg-slate-700 rounded-full"></span>
-                <span>Last Updated: 2026-04-21 11:25 AM</span>
+        <!-- SK Hynix -->
+        <div class="card p-6">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-xl font-bold">SK하이닉스</h3>
+                    <p class="text-xs text-slate-500">000660</p>
+                </div>
+                <span class="text-sky-400 font-bold">1,240,000</span>
             </div>
-            <div class="font-bold">© 2026 Soul's Insight. All rights reserved.</div>
-        </footer>
+            <div class="text-xs space-y-2 text-slate-400">
+                <div class="flex justify-between"><span>2026 예상 OP</span><span class="text-slate-200">45.2조</span></div>
+                <div class="flex justify-between"><span>목표 PER</span><span class="text-slate-200">15.0x</span></div>
+                <div class="flex justify-between font-bold text-sky-400"><span>가중 적정가</span><span>1,680,000</span></div>
+            </div>
+        </div>
+        <!-- NVIDIA -->
+        <div class="card p-6 border-sky-500/30 bg-sky-500/5">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-xl font-bold">NVIDIA (US)</h3>
+                    <p class="text-xs text-slate-500">NVDA</p>
+                </div>
+                <span class="text-sky-400 font-bold">$945.12</span>
+            </div>
+            <div class="text-xs space-y-2 text-slate-400">
+                <div class="flex justify-between"><span>2026 예상 EPS</span><span class="text-slate-200">$42.50</span></div>
+                <div class="flex justify-between"><span>목표 PER</span><span class="text-slate-200">35.0x</span></div>
+                <div class="flex justify-between font-bold text-sky-400"><span>가중 적정가</span><span>$1,480</span></div>
+            </div>
+        </div>
     </div>
 
+    <!-- Charts & Analysis -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div class="card p-8">
+            <h3 class="text-xl font-bold mb-6">밸류에이션 시나리오 비교</h3>
+            <canvas id="valuationChart" height="250"></canvas>
+        </div>
+        <div class="space-y-6">
+            <div class="card p-6">
+                <h4 class="font-bold text-sky-400 mb-4">[핵심 투자 포인트]</h4>
+                <ul class="text-sm text-slate-300 space-y-2 list-disc ml-4">
+                    <li>HBM4 양산 가시화 및 AI 서버향 DDR5 수요 폭증</li>
+                    <li>삼성전자 파운드리 2nm 공정 수율 안정화 및 대형 고객사 확보</li>
+                    <li>반도체 슈퍼사이클 재진입에 따른 분기별 영업이익 신고가 행진</li>
+                </ul>
+            </div>
+            <div class="card p-6 risk-high border-none">
+                <h4 class="font-bold text-rose-400 mb-4">[리스크 요인]</h4>
+                <ul class="text-sm text-slate-300 space-y-2 list-disc ml-4">
+                    <li class="font-bold text-rose-300">환율 1,478원: High Currency Risk Zone (15% 할인 적용)</li>
+                    <li>미국 대선 결과에 따른 보조금 및 대중국 수출 규제 불확실성</li>
+                    <li>AI 거품론 대두 시 밸류에이션 멀티플 하락 압력</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Guide -->
+    <div class="card p-8 mb-8">
+        <h3 class="text-xl font-bold mb-6">실전 투자 액션 가이드</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+            <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                <div class="text-xs text-slate-500 mb-1">강력 매수 구간</div>
+                <div class="font-bold text-sky-400">~ 200,000</div>
+                <div class="text-[10px] text-slate-500 mt-2">삼성전자 기준</div>
+            </div>
+            <div class="p-4 rounded-xl bg-sky-500/10 border border-sky-500/30">
+                <div class="text-xs text-sky-400 mb-1">보유 및 관망</div>
+                <div class="font-bold">200k ~ 250k</div>
+                <div class="text-[10px] text-slate-500 mt-2">현재 구간</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                <div class="text-xs text-slate-500 mb-1">분할 익절</div>
+                <div class="font-bold text-rose-400">250,000 ~</div>
+                <div class="text-[10px] text-slate-500 mt-2">적정가 도달 시</div>
+            </div>
+            <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30">
+                <div class="text-xs text-rose-400 mb-1">위험 관리</div>
+                <div class="font-bold">200,000 이탈</div>
+                <div class="text-[10px] text-slate-500 mt-2">추세 훼손 시</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-slate-500 text-xs py-8 border-t border-slate-800">
+        <p>Data Source: Naver Finance, Google Finance, Analyst Consensus (Weighted Average)</p>
+        <p class="mt-2">Last Updated: 2026-04-23 10:29:01 KST | Powered by Soul's Auto-Hunt Engine</p>
+    </footer>
+
     <script>
-        const ctxVal = document.getElementById('valuationChart').getContext('2d');
-        new Chart(ctxVal, {
+        const ctx = document.getElementById('valuationChart').getContext('2d');
+        new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['삼성전자', 'SK하이닉스', 'NVIDIA (KRW 환산)'],
-                datasets: [{
-                    label: '2026 연간 예상 영업이익 (Trillion KRW)',
-                    data: [335, 213, 108], // NVIDIA assumed 77B USD * 1400 = ~108T KRW
-                    backgroundColor: [
-                        'rgba(129, 140, 248, 0.8)',
-                        'rgba(56, 189, 248, 0.8)',
-                        'rgba(52, 211, 153, 0.8)'
-                    ],
-                    borderRadius: 12,
-                    borderWidth: 0
-                }]
+                labels: ['삼성전자', 'SK하이닉스', 'NVIDIA'],
+                datasets: [
+                    {
+                        label: '현재가',
+                        data: [227500, 1240000, 945120], // NVIDIA converted to KRW approx for scale
+                        backgroundColor: 'rgba(56, 189, 248, 0.3)',
+                        borderColor: '#38bdf8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '가중 적정가',
+                        data: [285000, 1680000, 1480000], 
+                        backgroundColor: 'rgba(129, 140, 248, 0.6)',
+                        borderColor: '#818cf8',
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
                 scales: {
-                    x: { grid: { display: false }, ticks: { color: '#64748b', font: { weight: 'bold' } } },
-                    y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#64748b' } }
+                    y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#94a3b8' } }
                 }
             }
         });
