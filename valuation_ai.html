@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI/플랫폼 자동사냥 | Soul's 자동사냥포털</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root {
+  --bg: #020617;
+  --card-bg: #0f172a;
+  --border: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --accent: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+}
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.05), transparent), radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.1), transparent);
+  color: var(--text-primary);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(12px);
+}
+.metric-value {
+  font-family: 'JetBrains Mono', monospace;
+}
+</style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+<div class="max-w-6xl mx-auto">
+    <!-- Navigation -->
+    <nav class="mb-8">
+        <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+            <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
+                <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
+                <a href="valuation_semi.html" class="hover:text-sky-400 transition-colors">종목분석</a>
+            </div>
+        </div>
+        <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+            <a href="valuation_semi.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">반도체주</a>
+            <a href="valuation_defense.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">방산주</a>
+            <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+            <a href="valuation_ai.html" class="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-lg transition-all border border-sky-500/50">AI/플랫폼</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="mb-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <div class="text-sky-400 font-bold tracking-widest text-sm mb-2 uppercase">Sector Analysis: AI & Platform</div>
+                <h1 class="text-4xl md:text-5xl font-black mb-2">AI/플랫폼 <span class="gradient-text">자동사냥</span></h1>
+                <p class="text-slate-400 font-medium">NVIDIA $81.6B 어닝 서프라이즈 및 데이터센터 지배력 분석</p>
+            </div>
+            <div class="text-right">
+                <div class="text-slate-500 text-sm font-mono mb-1">Updated: 2026-06-19 09:02 KST</div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold animate-pulse">
+                    ⚠️ 고환율 리스크 존 (1,527.10)
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Summary Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="card p-6">
+            <div class="text-slate-500 text-xs font-bold mb-2 uppercase">NVIDIA (NVDA)</div>
+            <div class="text-3xl font-black metric-value mb-1">$210.69</div>
+            <div class="text-emerald-400 text-sm font-bold">▲ 1.27% <span class="text-slate-500 font-normal ml-1">(상승)</span></div>
+        </div>
+        <div class="card p-6 border-sky-500/30">
+            <div class="text-sky-400 text-xs font-bold mb-2 uppercase">Q1 REVENUE</div>
+            <div class="text-3xl font-black metric-value mb-1">$81.6B</div>
+            <div class="text-emerald-400 text-sm font-bold">▲ 85% YoY</div>
+        </div>
+        <div class="card p-6">
+            <div class="text-slate-500 text-xs font-bold mb-2 uppercase">USD/KRW EXCHANGE</div>
+            <div class="text-3xl font-black metric-value mb-1">1,527.10</div>
+            <div class="text-red-400 text-sm font-bold">▲ High <span class="text-slate-500 font-normal ml-1">(위험)</span></div>
+        </div>
+        <div class="card p-6">
+            <div class="text-slate-500 text-xs font-bold mb-2 uppercase">PORTFOLIO ACCENT</div>
+            <div class="text-3xl font-black metric-value mb-1">AI 1 : KR 2</div>
+            <div class="text-slate-400 text-sm">Target Allocation</div>
+        </div>
+    </div>
+
+    <!-- Core Investment Points -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-sky-400"></span> 핵심 투자 포인트
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="card p-6 bg-slate-900/50">
+                <h3 class="font-bold text-sky-400 mb-3 text-lg">데이터센터 수익성 폭발</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    NVIDIA의 데이터센터 매출이 **$75.2B**를 기록하며 전체 매출의 92%를 차지. 
+                    단순 하드웨어 판매를 넘어 AI 팩토리 아키텍처 구축을 통한 독점적 생태계 강화. 
+                    수요 대비 공급 부족이 2026년 하반기까지 지속될 전망.
+                </p>
+            </div>
+            <div class="card p-6 bg-slate-900/50">
+                <h3 class="font-bold text-sky-400 mb-3 text-lg">Vera Rubin & DLSS 5</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    차세대 **Vera Rubin** 플랫폼 발표로 경쟁사와의 기술 격차 재확대. 
+                    DLSS 5를 통한 온디바이스 AI 및 클라우드 렌더링 효율 극대화로 소비자용 GPU 시장에서도 견고한 해자 유지.
+                </p>
+            </div>
+            <div class="card p-6 bg-slate-900/50">
+                <h3 class="font-bold text-sky-400 mb-3 text-lg">주주 환원 강화</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    **$80B 규모의 추가 자사주 매입** 승인 및 배당금 25배 인상($0.01 → $0.25). 
+                    막대한 현금 흐름을 바탕으로 기술적 하방 경직성 확보 및 장기 투자 매력도 상승.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Valuation Chart -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-indigo-400"></span> 매출 비중 및 가이드 추이
+        </h2>
+        <div class="card p-8">
+            <div class="relative h-[400px]">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2026 Scenarios -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 2026 시나리오 분석 (NVIDIA 기준)
+        </h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-800/50 text-slate-400 text-xs uppercase tracking-wider">
+                        <th class="p-4 rounded-tl-xl border-b border-slate-700">시나리오</th>
+                        <th class="p-4 border-b border-slate-700">매출 추정 (조원/달러)</th>
+                        <th class="p-4 border-b border-slate-700">적정 PER</th>
+                        <th class="p-4 border-b border-slate-700">환율 할인</th>
+                        <th class="p-4 rounded-tr-xl border-b border-slate-700 text-right">가중 적정가</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm font-medium">
+                    <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                        <td class="p-4">🟢 낙관 (AI 가속화)</td>
+                        <td class="p-4 font-mono">$380B</td>
+                        <td class="p-4 font-mono">45x</td>
+                        <td class="p-4 text-emerald-400">-5%</td>
+                        <td class="p-4 text-right text-emerald-400 font-bold">$350</td>
+                    </tr>
+                    <tr class="bg-sky-500/5 border-b border-sky-500/20">
+                        <td class="p-4 text-sky-400 font-bold">🔵 기본 (Base Case)</td>
+                        <td class="p-4 font-mono">$340B</td>
+                        <td class="p-4 font-mono">38x</td>
+                        <td class="p-4 text-red-400 font-bold">-15%</td>
+                        <td class="p-4 text-right text-sky-400 font-bold">$300</td>
+                    </tr>
+                    <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                        <td class="p-4">🔴 보수적 (공급 과잉)</td>
+                        <td class="p-4 font-mono">$290B</td>
+                        <td class="p-4 font-mono">30x</td>
+                        <td class="p-4 text-red-600">-20%</td>
+                        <td class="p-4 text-right text-red-400 font-bold">$180</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="mt-4 text-xs text-slate-500">* 환율 1,527.10원 돌파에 따라 해외 자산에 대해 **15% 매크로 리스크 할인** 적용 중.</p>
+    </section>
+
+    <!-- Risks -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500"></span> 리스크 요인
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-5 rounded-2xl bg-red-500/5 border border-red-500/20">
+                <div class="flex items-center gap-2 mb-2 text-red-400 font-bold">
+                    <span class="text-xs px-2 py-0.5 rounded bg-red-500 text-white">CRITICAL</span>
+                    💱 High Currency Risk Zone
+                </div>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    USD/KRW 환율이 **1,527.10**을 기록하며 심리적 마지노선인 1,450원을 크게 상회. 
+                    신규 해외 주식 매수 시 환차손 리스크 급증. 포트폴리오 차원의 15% 가치 할인이 불가피함.
+                </p>
+            </div>
+            <div class="p-5 rounded-2xl bg-amber-500/5 border border-amber-500/20">
+                <div class="flex items-center gap-2 mb-2 text-amber-400 font-bold">
+                    <span class="text-xs px-2 py-0.5 rounded bg-amber-500 text-black">WARNING</span>
+                    📊 Revenue Concentration
+                </div>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    데이터센터 비중이 92%에 도달하며 특정 섹터의 설비투자(CAPEX) 사이클에 극도로 민감해짐. 
+                    Big Tech(MSFT, GOOGL)의 AI 투자 회수기(ROI) 검증 요구 시 변동성 확대 우려.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Big Tech Comparison -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-slate-400"></span> Peer Group 실적 비교
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="card p-6 flex justify-between items-center">
+                <div>
+                    <div class="text-xs text-slate-500 font-bold uppercase mb-1">Microsoft (MSFT)</div>
+                    <div class="text-xl font-bold font-mono">$379.40 <span class="text-emerald-400 text-sm font-normal">▲ 0.13%</span></div>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-slate-500">P/E Ratio</div>
+                    <div class="font-mono text-sm">34.2x</div>
+                </div>
+            </div>
+            <div class="card p-6 flex justify-between items-center">
+                <div>
+                    <div class="text-xs text-slate-500 font-bold uppercase mb-1">Alphabet (GOOGL)</div>
+                    <div class="text-xl font-bold font-mono">$367.93 <span class="text-emerald-400 text-sm font-normal">▲ 1.14%</span></div>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-slate-500">P/E Ratio</div>
+                    <div class="font-mono text-sm">26.8x</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Guide -->
+    <section class="mb-12">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-sky-400"></span> 액션 가이드
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/20">
+                <div class="text-slate-500 text-xs font-bold mb-1">적극 매수</div>
+                <div class="text-sm font-mono text-slate-400">&le; $180</div>
+            </div>
+            <div class="p-4 rounded-xl border border-sky-500/50 bg-sky-500/10">
+                <div class="text-sky-400 text-xs font-bold mb-1">보유 / 관망</div>
+                <div class="text-sm font-mono text-sky-400">$180 ~ $250</div>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/20">
+                <div class="text-slate-500 text-xs font-bold mb-1">비중 축소</div>
+                <div class="text-sm font-mono text-slate-400">$250 ~ $320</div>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-700 bg-slate-800/20">
+                <div class="text-slate-500 text-xs font-bold mb-1">적극 매도</div>
+                <div class="text-sm font-mono text-slate-400">&ge; $320</div>
+            </div>
+        </div>
+        <div class="mt-4 p-4 rounded-xl bg-slate-800/30 border border-slate-700 text-sm text-slate-400">
+            📍 **현재 위치: $210.69 → "보유 / 관망" 구간.** 실적은 환상적이나 고환율 리스크와 단기 급등에 따른 피로도가 존재. 
+            $200 이하 조정 시 분할 매수 고려, 현재는 환율 안정 확인 전까지 신규 진입 자제 권고.
+        </div>
+    </section>
+
+    <footer class="mt-12 pt-8 border-t border-slate-800 text-slate-500 text-xs flex flex-col md:flex-row justify-between gap-4">
+        <div>
+            &copy; 2026 Soul's 자동사냥포털 | 본 리포트는 AI 데이터 분석을 기반으로 작성되었습니다.
+        </div>
+        <div class="flex gap-4 font-mono uppercase">
+            <span>Model: Gemini-Flash-L</span>
+            <span>Locale: KST</span>
+        </div>
+    </footer>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    try {
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Q1 25', 'Q2 25', 'Q3 25', 'Q4 25', 'Q1 26 (Actual)', 'Q2 26 (Guide)'],
+                datasets: [{
+                    label: 'Quarterly Revenue ($B)',
+                    data: [26.0, 30.0, 35.1, 45.3, 81.6, 91.0],
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#38bdf8',
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }, {
+                    label: 'Data Center Only ($B)',
+                    data: [22.0, 26.2, 31.0, 41.5, 75.2, 84.0],
+                    borderColor: '#818cf8',
+                    borderDash: [5, 5],
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.4,
+                    pointBackgroundColor: '#818cf8'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#94a3b8',
+                            font: { family: 'Noto Sans KR', weight: 'bold' },
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: '#0f172a',
+                        titleColor: '#f1f5f9',
+                        bodyColor: '#94a3b8',
+                        borderColor: '#1e293b',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b', font: { family: 'JetBrains Mono' } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#64748b', font: { family: 'JetBrains Mono' } }
+                    }
+                }
+            }
+        });
+    } catch (e) {
+        console.error('Chart initialization failed:', e);
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK하이닉스 밸류에이션 | Soul's 자동사냥포털</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #020617;
+  --bg2: #0f172a;
+  --bg3: #1e293b;
+  --bg4: #334155;
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --border: #1e293b;
+  --blue: #38bdf8;
+  --blue-bg: rgba(56,189,248,0.08);
+  --red: #f43f5e;
+  --red-bg: rgba(244,63,94,0.08);
+  --green: #10b981;
+  --green-bg: rgba(16,185,129,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  line-height: 1.7;
+}
+.container { max-width: 1080px; margin: 0 auto; padding: 32px 20px; }
+.header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 32px; }
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+.metric-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.metric-card .value { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; }
+.section { margin-bottom: 36px; }
+.section-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: var(--bg3); color: var(--text2); padding: 10px; }
+td { padding: 10px; text-align: center; border-bottom: 1px solid var(--border); }
+.chart-container-inner { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.footer { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 40px; font-size: 11px; color: var(--text3); }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 style="font-size: 28px; font-weight: 900;">SK하이닉스 <span style="color:var(--blue);">적정가 분석 리포트</span></h1>
+        <div style="font-size: 13px; color: var(--text2); margin-top: 8px;">기준일: 2026.04.01 | 업종: 반도체/메모리</div>
+    </div>
+
+    <div class="metrics">
+        <div class="metric-card" style="border-color: var(--blue);">
+            <div style="font-size: 12px; color: var(--text3);">오늘 종가</div>
+            <div class="value">807,000</div>
+            <div style="font-size: 12px; color: var(--red);">▼ -7.56%</div>
+        </div>
+        <div class="metric-card" style="border-color: var(--green);">
+            <div style="font-size: 12px; color: var(--text3);">가중 적정가</div>
+            <div class="value">871,000</div>
+            <div style="font-size: 12px; color: var(--blue);">Base Case</div>
+        </div>
+        <div class="metric-card">
+            <div style="font-size: 12px; color: var(--text3);">업사이드</div>
+            <div class="value">+7.9%</div>
+        </div>
+        <div class="metric-card" style="border-color: var(--red);">
+            <div style="font-size: 12px; color: var(--text3);">리스크</div>
+            <div class="value" style="color:var(--red);">매우 높음</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">분기별 적정가 비교 차트</div>
+        <div class="chart-container-inner">
+            <!-- Mandatory fixed-height container for validator -->
+            <div style="position: relative; height: 400px;">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">주요 실적 전제</div>
+        <table>
+            <thead>
+                <tr><th>항목</th><th>수치</th><th>비고</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>연간 영업이익 추정</td><td>145조원</td><td>컨센서스 중간값 채택</td></tr>
+                <tr><td>적용 PER</td><td>8.0x</td><td>반도체 사이클 반영</td></tr>
+                <tr><td>전쟁 할인율</td><td>-20%</td><td>중동 리스크 반영</td></tr>
+                <tr><td>환율 할인율</td><td>-4%</td><td>1,535원 초약세 반영</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Soul's 자동사냥포털 | 생성일: 2026.04.01 (KST)</p>
+    </footer>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    try {
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['1Q26', '2Q26', '3Q26', '4Q26'],
+                datasets: [
+                    {
+                        label: '수정 적정가 (만원)',
+                        data: [75.3, 113.0, 94.7, 74.4],
+                        backgroundColor: 'rgba(56, 189, 248, 0.7)',
+                        borderColor: '#38bdf8',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '기존 적정가 (만원)',
+                        data: [87.0, 120.0, 108.0, 78.0],
+                        backgroundColor: 'rgba(148, 163, 184, 0.3)',
+                        borderColor: '#94a3b8',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#f1f5f9' } }
+                }
+            }
+        });
+    } catch (e) {
+        console.error('Chart failed:', e);
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul's 실시간 시뮬레이터 | AI 주식 인사이트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #020617; color: #f1f5f9; }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-gradient { background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.05), transparent), radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.1), transparent); }
+        .card { background-color: #0f172a; border: 1px solid #1e293b; border-radius: 1.5rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card:hover { border-color: #38bdf8; }
+    </style>
+</head>
+<body class="hero-gradient min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Navigation -->
+        <nav class="mb-8">
+            <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+                <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+                <div class="flex gap-6 text-sm font-medium text-slate-400">
+                    <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                    <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                    <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
+                    <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
+                    <a href="valuation_semi.html" class="hover:text-sky-400 transition-colors">종목분석</a>
+                </div>
+            </div>
+            <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+                <a href="valuation_semi.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">반도체주</a>
+                <a href="valuation_defense.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">방산주</a>
+                <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+                <a href="valuation_ai.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">AI/플랫폼</a>
+            </div>
+        </nav>
+
+        <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div>
+                <h1 class="text-4xl font-extrabold mb-2 gradient-text">실시간 시뮬레이터</h1>
+                <p class="text-slate-400">매크로 변수에 따른 종목별 할인율 및 적정가 리계산 | 2026. 06. 19. 09:02</p>
+            </div>
+            <div class="risk-badge px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400" id="headerRiskBadge">
+                <span id="headerRiskLabel">⚠️ High Currency Risk Zone</span>
+                <span class="bg-red-500 text-white px-2 py-0.5 rounded" id="headerRiskVal">1,527.10</span>
+            </div>
+        </header>
+
+        <!-- Slider Simulator Panel -->
+        <div class="card p-6 mb-12">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-sky-400">
+                <span class="w-2.5 h-6 bg-sky-400 rounded-full"></span>
+                시뮬레이터 변수 설정
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- USD/KRW Slider -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-sm font-semibold">
+                        <span class="text-slate-300">원/달러 환율 (USD/KRW)</span>
+                        <span class="text-sky-400 font-mono" id="exchangeRateVal">1,527.10 KRW</span>
+                    </div>
+                    <input type="range" id="exchangeRateSlider" min="1300" max="1700" step="1" value="1527" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+                    <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                        <span>1,300</span>
+                        <span>1,450 (고환율 진입선)</span>
+                        <span>1,700</span>
+                    </div>
+                </div>
+                <!-- Geopolitical Risk Slider -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-sm font-semibold">
+                        <span class="text-slate-300">지정학적 리스크</span>
+                        <span class="text-sky-400 font-mono" id="geoRiskVal">50%</span>
+                    </div>
+                    <input type="range" id="geoRiskSlider" min="0" max="100" step="1" value="50" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+                    <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                        <span>0% (평화)</span>
+                        <span>50% (경계)</span>
+                        <span>100% (긴장 최고조)</span>
+                    </div>
+                </div>
+            </div>
+            <!-- High Currency Risk Warning Box -->
+            <div id="currencyRiskWarning" class="mt-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold hidden flex items-center gap-2 animate-pulse">
+                <span>🚨 Warning: High Currency Risk Zone! 환율이 1,450원을 초과하여 국내 밸류에이션에 15% 이상 강제 리스크 할인이 자동 반영 중입니다.</span>
+            </div>
+        </div>
+
+        <!-- Simulation Targets Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Samsung Electronics -->
+            <div class="card p-6 relative overflow-hidden">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h4 class="font-bold text-lg">삼성전자</h4>
+                        <span class="text-xs text-slate-500 font-mono">005930.KS</span>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold text-slate-300">₩362,500</div>
+                        <div class="text-xs text-slate-500">현재가</div>
+                    </div>
+                </div>
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between text-xs">
+                        <span class="text-slate-500">기본 적정가</span>
+                        <span class="font-bold">₩570,000</span>
+                    </div>
+                    <div class="flex justify-between text-xs">
+                        <span class="text-sky-400 font-bold" id="samsungLabel">조정 적정가</span>
+                        <span class="font-bold text-sky-400" id="samsungVal">₩484,500</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-sky-400 h-full transition-all duration-300" id="samsungProgress" style="width: 70.8%"></div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 text-right" id="samsungUpside">상승여력: +41.25%</div>
+                </div>
+            </div>
+
+            <!-- SK Hynix -->
+            <div class="card p-6 relative overflow-hidden">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h4 class="font-bold text-lg">SK하이닉스</h4>
+                        <span class="text-xs text-slate-500 font-mono">000660.KS</span>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold text-slate-300">₩2,685,000</div>
+                        <div class="text-xs text-slate-500">현재가</div>
+                    </div>
+                </div>
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between text-xs">
+                        <span class="text-slate-500">기본 적정가</span>
+                        <span class="font-bold">₩2,500,000</span>
+                    </div>
+                    <div class="flex justify-between text-xs">
+                        <span class="text-sky-400 font-bold" id="hynixLabel">조정 적정가</span>
+                        <span class="font-bold text-sky-400" id="hynixVal">₩2,125,000</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-sky-400 h-full transition-all duration-300" id="hynixProgress" style="width: 100%"></div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 text-right" id="hynixUpside">상승여력: -10.79%</div>
+                </div>
+            </div>
+
+            <!-- LG Energy Solution -->
+            <div class="card p-6 relative overflow-hidden">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h4 class="font-bold text-lg">LG에너지솔루션</h4>
+                        <span class="text-xs text-slate-500 font-mono">373220.KS</span>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold text-slate-300">₩400,000</div>
+                        <div class="text-xs text-slate-500">현재가</div>
+                    </div>
+                </div>
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between text-xs">
+                        <span class="text-slate-500">기본 적정가</span>
+                        <span class="font-bold">₩600,000</span>
+                    </div>
+                    <div class="flex justify-between text-xs">
+                        <span class="text-sky-400 font-bold" id="lgLabel">조정 적정가</span>
+                        <span class="font-bold text-sky-400" id="lgVal">₩510,000</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-sky-400 h-full transition-all duration-300" id="lgProgress" style="width: 80.5%"></div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 text-right" id="lgUpside">상승여력: +24.24%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profit Charts Visualization -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div class="lg:col-span-2 card p-6">
+                <h3 class="text-lg font-bold mb-4">예상 영업이익 전망 변동 추이</h3>
+                <div class="relative h-[300px]">
+                    <canvas id="simulationChart"></canvas>
+                </div>
+            </div>
+            <div class="card p-6 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">시뮬레이터 인사이트</h3>
+                    <div class="space-y-4 text-xs text-slate-400 leading-relaxed">
+                        <p>📍 **고환율 압력**: 원/달러 환율이 1,450원을 돌파할 경우, 부품 수입 단가 상승 및 외인 유출에 따른 디스카운트가 자동 15% 일괄 가중 적용됩니다.</p>
+                        <p>📍 **지정학적 리스크**: 리스크가 80% 이상으로 극단화될 경우 추가적인 10%의 안전마진이 강제 적용되어 적정 밸류가 대폭 하향 조정됩니다.</p>
+                    </div>
+                </div>
+                <button class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-white font-bold rounded-xl transition-all mt-6 text-sm" onclick="location.href='index.html'">메인 포털로 가기</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-slate-500 text-sm py-10 border-t border-slate-800">
+            © 2026 Soul's Insight. All rights reserved. Data verified via Research.<br>
+            Last Updated: 2026. 06. 19. 09:02 KST
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            let chartInstance = null;
+            try {
+                const ctx = document.getElementById('simulationChart').getContext('2d');
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['삼성전자 (조 원)', 'SK하이닉스 (조 원)', 'LG에너지솔루션 (조 원)'],
+                        datasets: [
+                            {
+                                label: '기본 영업이익 전망 (E)',
+                                data: [25.1, 12.5, 2.8],
+                                backgroundColor: 'rgba(129, 140, 248, 0.4)',
+                                borderColor: '#818cf8',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '조정 영업이익 전망 (E)',
+                                data: [21.3, 10.6, 2.38],
+                                backgroundColor: 'rgba(56, 189, 248, 0.8)',
+                                borderColor: '#38bdf8',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#94a3b8' } }
+                        },
+                        scales: {
+                            y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+                            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                        }
+                    }
+                });
+            } catch (e) {
+                console.error('Simulation Chart initialization failed:', e);
+            }
+
+            const exchangeRateSlider = document.getElementById('exchangeRateSlider');
+            const geoRiskSlider = document.getElementById('geoRiskSlider');
+            const exchangeRateVal = document.getElementById('exchangeRateVal');
+            const geoRiskVal = document.getElementById('geoRiskVal');
+
+            const samsungLabel = document.getElementById('samsungLabel');
+            const samsungVal = document.getElementById('samsungVal');
+            const samsungProgress = document.getElementById('samsungProgress');
+            const samsungUpside = document.getElementById('samsungUpside');
+
+            const hynixLabel = document.getElementById('hynixLabel');
+            const hynixVal = document.getElementById('hynixVal');
+            const hynixProgress = document.getElementById('hynixProgress');
+            const hynixUpside = document.getElementById('hynixUpside');
+
+            const lgLabel = document.getElementById('lgLabel');
+            const lgVal = document.getElementById('lgVal');
+            const lgProgress = document.getElementById('lgProgress');
+            const lgUpside = document.getElementById('lgUpside');
+
+            const currencyRiskWarning = document.getElementById('currencyRiskWarning');
+            const headerRiskBadge = document.getElementById('headerRiskBadge');
+            const headerRiskLabel = document.getElementById('headerRiskLabel');
+            const headerRiskVal = document.getElementById('headerRiskVal');
+
+            // Prices
+            const samsungBase = 570000;
+            const samsungCurrent = 362500;
+            const hynixBase = 2500000;
+            const hynixCurrent = 2685000;
+            const lgBase = 600000;
+            const lgCurrent = 400000;
+
+            function updateSimulator() {
+                const exchangeRate = parseFloat(exchangeRateSlider.value);
+                const geoRisk = parseFloat(geoRiskSlider.value);
+
+                // Update texts
+                exchangeRateVal.textContent = exchangeRate.toLocaleString('ko-KR') + ' KRW';
+                geoRiskVal.textContent = geoRisk + '%';
+
+                if (exchangeRate > 1450) {
+                    currencyRiskWarning.classList.remove('hidden');
+                    headerRiskBadge.className = 'risk-badge px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400';
+                    headerRiskLabel.textContent = '⚠️ High Currency Risk Zone';
+                } else {
+                    currencyRiskWarning.classList.add('hidden');
+                    headerRiskBadge.className = 'px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 bg-slate-800/50 border border-slate-700 text-slate-400';
+                    headerRiskLabel.textContent = '🟢 Normal Currency Zone';
+                }
+                headerRiskVal.textContent = exchangeRate.toLocaleString('ko-KR');
+
+                // Discount factors
+                let rateDiscount = exchangeRate > 1450 ? 0.15 : 0.0;
+                let geoDiscount = (geoRisk / 100) * 0.15;
+                let totalDiscount = rateDiscount + geoDiscount;
+                let discountPercentStr = Math.round(totalDiscount * 100) + '%';
+
+                samsungLabel.textContent = `조정 적정가 (-${discountPercentStr})`;
+                hynixLabel.textContent = `조정 적정가 (-${discountPercentStr})`;
+                lgLabel.textContent = `조정 적정가 (-${discountPercentStr})`;
+
+                let samsungAdjusted = Math.round(samsungBase * (1 - totalDiscount));
+                let hynixAdjusted = Math.round(hynixBase * (1 - totalDiscount));
+                let lgAdjusted = Math.round(lgBase * (1 - totalDiscount));
+
+                samsungVal.textContent = '₩' + samsungAdjusted.toLocaleString('ko-KR');
+                hynixVal.textContent = '₩' + hynixAdjusted.toLocaleString('ko-KR');
+                lgVal.textContent = '₩' + lgAdjusted.toLocaleString('ko-KR');
+
+                // Upsides
+                let samsungUpsidePercent = ((samsungAdjusted - samsungCurrent) / samsungCurrent) * 100;
+                let hynixUpsidePercent = ((hynixAdjusted - hynixCurrent) / hynixCurrent) * 100;
+                let lgUpsidePercent = ((lgAdjusted - lgCurrent) / lgCurrent) * 100;
+
+                samsungUpside.textContent = `상승여력: ${samsungUpsidePercent >= 0 ? '+' : ''}${samsungUpsidePercent.toFixed(2)}%`;
+                hynixUpside.textContent = `상승여력: ${hynixUpsidePercent >= 0 ? '+' : ''}${hynixUpsidePercent.toFixed(2)}%`;
+                lgUpside.textContent = `상승여력: ${lgUpsidePercent >= 0 ? '+' : ''}${lgUpsidePercent.toFixed(2)}%`;
+
+                // Progress bars
+                samsungProgress.style.width = Math.max(0, Math.min(100, (samsungCurrent / samsungAdjusted) * 100)) + '%';
+                hynixProgress.style.width = Math.max(0, Math.min(100, (hynixCurrent / hynixAdjusted) * 100)) + '%';
+                lgProgress.style.width = Math.max(0, Math.min(100, (lgCurrent / lgAdjusted) * 100)) + '%';
+
+                // Chart dynamic scaling
+                if (chartInstance) {
+                    const scale = 1 - (totalDiscount * 0.4);
+                    chartInstance.data.datasets[1].data[0] = +(25.1 * scale).toFixed(1);
+                    chartInstance.data.datasets[1].data[1] = +(12.5 * scale).toFixed(1);
+                    chartInstance.data.datasets[1].data[2] = +(2.8 * scale).toFixed(1);
+                    chartInstance.update();
+                }
+            }
+
+            exchangeRateSlider.addEventListener('input', updateSimulator);
+            geoRiskSlider.addEventListener('input', updateSimulator);
+            updateSimulator();
+        });
+    </script>
+</body>
+</html>

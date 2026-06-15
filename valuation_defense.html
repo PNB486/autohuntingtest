@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul's Valuation - 방산</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { background-color: #020617; color: #f1f5f9; font-family: 'Pretendard', sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-bg { background-color: #0f172a; border: 1px solid #1e293b; }
+        .risk-badge { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+        .strategic-grid { background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 20px 20px; }
+    </style>
+</head>
+<body class="p-6 strategic-grid">
+    <div class="max-w-6xl mx-auto">
+        <!-- 2-tier navigation -->
+        <nav class="mb-8">
+            <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+                <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+                <div class="flex gap-6 text-sm font-medium text-slate-400">
+                    <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                    <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                    <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
+                    <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
+                    <a href="valuation_semi.html" class="hover:text-sky-400 transition-colors">종목분석</a>
+                </div>
+            </div>
+            <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+                <a href="valuation_semi.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">반도체주</a>
+                <a href="valuation_defense.html" class="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/30">방산주</a>
+                <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+                <a href="valuation_ai.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">AI/플랫폼</a>
+            </div>
+        </nav>
+
+        <header class="mb-10 flex justify-between items-end">
+            <div>
+                <h1 class="text-4xl font-extrabold mb-2 gradient-text">방산 섹터 전략 분석</h1>
+                <p class="text-slate-400">글로벌 지정학적 리스크 및 수주 가치 진단 | 2026. 06. 19. 09:02</p>
+            </div>
+            <div class="risk-badge px-4 py-2 rounded-xl text-sm font-bold">
+                ⚠️ High Currency Risk Zone (1,527.10)
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Hanwha Aerospace -->
+            <div class="card-bg p-8 rounded-3xl relative overflow-hidden border-sky-500/20">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold">한화에어로스페이스</h2>
+                        <span class="text-slate-500 text-sm">012450.KS</span>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-bold text-sky-400">1,189,000 <span class="text-sm">KRW</span></div>
+                        <div class="text-blue-400 text-sm font-semibold">▼ 35,000 (-2.86%)</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-4 mb-8">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-500">목표가 (Target)</span>
+                        <span class="font-bold text-slate-300 line-through">1,600,000</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-sky-400 font-bold">조정 목표가 (-15%)</span>
+                        <span class="font-bold text-sky-400">1,360,000</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sky-400 h-full" style="width: 87.4%"></div>
+                    </div>
+                    <div class="text-xs text-slate-500 text-right">상승 여력: +14.38%</div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                        <div class="text-xs text-slate-500 mb-1">수주 잔고</div>
+                        <div class="text-lg font-bold text-sky-400">35.2조</div>
+                    </div>
+                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                        <div class="text-xs text-slate-500 mb-1">영업이익률</div>
+                        <div class="text-lg font-bold text-sky-400">12.5%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIG Nex1 -->
+            <div class="card-bg p-8 rounded-3xl relative overflow-hidden border-sky-500/20">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold">LIG넥스원</h2>
+                        <span class="text-slate-500 text-sm">079550.KS</span>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-bold text-sky-400">884,000 <span class="text-sm">KRW</span></div>
+                        <div class="text-blue-400 text-sm font-semibold">▼ 66,000 (-6.95%)</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-4 mb-8">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-slate-500">목표가 (Target)</span>
+                        <span class="font-bold text-slate-300 line-through">1,100,000</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-sky-400 font-bold">조정 목표가 (-15%)</span>
+                        <span class="font-bold text-sky-400">935,000</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-sky-400 h-full" style="width: 94.5%"></div>
+                    </div>
+                    <div class="text-xs text-slate-500 text-right">상승 여력: +5.77%</div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                        <div class="text-xs text-slate-500 mb-1">수주 잔고</div>
+                        <div class="text-lg font-bold text-sky-400">22.8조</div>
+                    </div>
+                    <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                        <div class="text-xs text-slate-500 mb-1">영업이익률</div>
+                        <div class="text-lg font-bold text-sky-400">10.8%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div class="lg:col-span-2 card-bg p-8 rounded-3xl">
+                <h3 class="text-xl font-bold mb-6">글로벌 수주 모멘텀 추이</h3>
+                <div class="relative h-[300px]">
+                    <canvas id="orderChart"></canvas>
+                </div>
+            </div>
+            <div class="card-bg p-8 rounded-3xl border-slate-700">
+                <h3 class="text-xl font-bold mb-6">섹터 인사이트</h3>
+                <div class="space-y-6">
+                    <div class="p-4 bg-slate-800/30 rounded-2xl border border-slate-700">
+                        <h4 class="text-sky-400 font-bold text-sm mb-2">고환율 수혜 섹터</h4>
+                        <p class="text-xs text-slate-400">수출 비중이 높은 방산 섹터는 원화 약세 시 환차익 발생으로 실적 개선 효과 기대 가능.</p>
+                    </div>
+                    <div class="p-4 bg-slate-800/30 rounded-2xl border border-slate-700">
+                        <h4 class="text-red-400 font-bold text-sm mb-2">High Currency Risk Zone (1,527.10)</h4>
+                        <p class="text-xs text-slate-400">원화 약세로 수출 단가는 유리하나, 글로벌 조달 비용 및 원자재 수입 리스크 증가로 전체 마진 확보를 위해 15% 보수적 가중치 할인을 적용하여 목표 가격을 조정했습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center text-slate-500 text-sm border-t border-slate-800 pt-8">
+            <p>Data Source: Verified Real-time Market Data & Strategic Reports</p>
+            <p class="mt-2">Last Updated: 2026. 06. 19. 09:02 KST</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('orderChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['2022', '2023', '2024', '2025', '2026(E)'],
+                    datasets: [
+                        {
+                            label: 'K-방산 수출액 (십억 달러)',
+                            data: [17.3, 13.5, 18.2, 21.5, 25.0],
+                            backgroundColor: 'rgba(56, 189, 248, 0.4)',
+                            borderColor: '#38bdf8',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#94a3b8' } }
+                    },
+                    scales: {
+                        y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

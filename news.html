@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Soul's 뉴스 자동사냥</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { background-color: #020617; color: #f1f5f9; font-family: 'Pretendard', sans-serif; }
+        .card { background-color: #1e293b; border: 1px solid #334155; transition: transform 0.2s ease; cursor: pointer; }
+        .card:hover { transform: scale(1.02); }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-link { transition: color 0.2s; }
+        .nav-link:hover { color: #38bdf8; }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- 네비게이션 메뉴 바 -->
+        <nav class="flex justify-between items-center mb-8 px-4 py-3 bg-slate-800/50 rounded-2xl border border-slate-700">
+            <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="index.html" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </a>
+                <a href="news.html" class="text-sky-400">News</a>
+                <a href="kospi.html" class="nav-link">KOSPI</a>
+                <a href="nasdaq.html" class="nav-link">NASDAQ</a>
+                <a href="valuation_semi.html" class="nav-link">Valuation</a>
+            </div>
+        </nav>
+
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-2 gradient-text">Soul's 뉴스 자동사냥</h1>
+            <p class="text-slate-400 text-lg">주요 분야 최신 뉴스 실시간 자동사냥 | 2026년 6월 19일 9시 02분</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/052/0002367904', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/052/2026/06/18/2367904.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="이 대통령, 트럼프와 골프 약속...&quot;한미관계는 단단하고 영원&quot;" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">정치</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | 정치</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">이 대통령, 트럼프와 골프 약속..."한미관계는 단단하고 영원"</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">프랑스 에비앙에서 열린 주요 7개국 정상회의에 참석한 이재명 대통령은 현지 시각 17일 도널드 트럼프 미국 대통령으로부터 골프 제안을 받았다고 밝혔습니다. 이 대통령은 순방을 마치고 귀국 비행기에 오른 뒤 자신의 S</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/421/0009011434', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/421/2026/06/18/9011434.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="상속 금융재산 '원스톱 지급' 추진…여러 금융기관 방문 없이 한 번에 처리" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">정치</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | 정치</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">상속 금융재산 '원스톱 지급' 추진…여러 금융기관 방문 없이 한 번에 처리</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">상속인이 여러 금융기관을 일일이 방문하지 않고도 금융재산을 한 번에 지급받을 수 있는 '통합지급 서비스' 도입이 추진된다. 청와대와 국민권익위원회, 금융감독원은 18일 '상속 금융재산 통합지급 서비스' 도입 방안을</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/014/0005536857', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/014/2026/06/18/5536857.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="메리츠금융그룹 &quot;MBK, 홈플러스 지원 계획 '납득 수준' 제시해야&quot;" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">경제</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | 경제</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">메리츠금융그룹 "MBK, 홈플러스 지원 계획 '납득 수준' 제시해야"</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">메리츠금융그룹이 홈플러스 사태와 관련해 최대주주인 MBK파트너스가 납득 가능한 수준의 지원 계획을 제시해야 한다고 지적했다. 메리츠금융그룹은 18일 입장문을 내고 "MBK파트너스는 지난해 홈플러스가 포함된 바이아웃펀</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/421/0009010511', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/421/2026/06/18/9010511.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="'입점업체 갑질' 배민·쿠팡, 상생안 무산…공정위, 제재 절차 돌입" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">경제</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">🟢 호재 | 수주/호재</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">'입점업체 갑질' 배민·쿠팡, 상생안 무산…공정위, 제재 절차 돌입</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">공정거래위원회가 입점업체에 대한 '최혜대우 요구'와 '와우멤버십 끼워팔기' 등의 혐의를 받는 배달의민족과 쿠팡이츠의 동의의결 신청을 기각하고, 정식 제재 심의 절차로 전환했다. 각사가 수천억 원 규모의 상생 방안을</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/082/0001385974', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/082/2026/06/18/1385974.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="5개 발전사 1개로 통합 전망…정부용역서 '1개사 통합안' 권고" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">경제</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | 경제</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">5개 발전사 1개로 통합 전망…정부용역서 '1개사 통합안' 권고</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">남동·중부·서부·남부·동서 5개 발전사를 하나의 통합발전사로 재편하는 방안이 정부의 유력한 발전공기업 구조개편안으로 가닥을 잡았다. 정부연구용역 중간결과 공개를 통해 ‘발전공기업 1개사 통합안’이 최적안으로 권고된데</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/001/0016147043', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/001/2026/06/19/16147043.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="트럼프 &quot;헤즈볼라·이스라엘 포함 모든 전선에서 휴전 기대&quot;" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">세계</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | 세계</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">트럼프 "헤즈볼라·이스라엘 포함 모든 전선에서 휴전 기대"</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">홍정규 특파원 = 도널드 트럼프 미국 대통령은 18일(현지시간) 소셜미디어 트루스소셜에서 "우리는 레바논, 헤즈볼라, 그리고 이스라엘을 포함한 모든 전선에서 완전한 휴전을 기대한다"고 밝혔다. 자신이 서명한 이란과의</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/052/0002368320', '_blank')">
+        <img src="https://ssl.pstatic.net/static.news/image/news/ogtag/navernews_800x420_20221201.jpg" class="w-full h-48 object-cover" alt="이스라엘 외무 &quot;인종차별 비유 EU 외교수장과 단절&quot;" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">세계</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | 세계</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">이스라엘 외무 "인종차별 비유 EU 외교수장과 단절"</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">기드온 사르 이스라엘 외무장관은 이스라엘을 과거 남아프리카공화국의 아파르트헤이트, 인종차별 정권에 비유한 카야 칼라스 유럽연합 외교·안보 고위 대표와 관계 단절을 선언했습니다. 사르 장관은 현지시간 18일 SNS를</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/025/0003531555', '_blank')">
+        <img src="https://ssl.pstatic.net/static.news/image/news/ogtag/navernews_800x420_20221201.jpg" class="w-full h-48 object-cover" alt="KT, 강원도 영월 찾아가 AI 교육[Biz & Now]" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">IT/과학</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | IT/과학</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">KT, 강원도 영월 찾아가 AI 교육[Biz & Now]</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">KT가 도서·산간 지역을 찾아가는 ‘고객경청포럼’을 개최했다고 18일 밝혔다. 경영진이 매월 다양한 고객을 직접 만나는 소통 프로그램이다. 강원도 영월군 옥동초등학교에서 학생, 학부모, 교사 등을 대상으로 열린 이</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card rounded-2xl overflow-hidden shadow-xl" onclick="window.open('https://n.news.naver.com/mnews/article/003/0014015199', '_blank')">
+        <img src="https://mimgnews.pstatic.net/image/origin/003/2026/06/19/14015199.jpg?type=nf220_150" class="w-full h-48 object-cover" alt="&quot;지퍼 닫히듯 씨앗 톡톡&quot;…韓 연구진, 제비꽃서 '의료 로봇' 혁신 찾았다" loading="lazy">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold text-sky-400 uppercase tracking-wider">IT/과학</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-500/10 text-slate-400 border border-slate-500/20 mb-2">🟡 중립 | IT/과학</span>
+            </div>
+            <h2 class="text-xl font-bold mb-3 line-clamp-2 leading-tight">"지퍼 닫히듯 씨앗 톡톡"…韓 연구진, 제비꽃서 '의료 로봇' 혁신 찾았다</h2>
+            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed">우리 주변에서 흔히 볼 수 있는 제비꽃이 현대 로봇공학으로도 흉내 내기 힘든 초정밀 번식 기술을 숨기고 있었던 것으로 밝혀졌다. 복잡한 제어 장치나 모터 없이 오직 껍질의 생김새와 구조의 힘만으로 씨앗을 하나씩 정교</p>
+            <div class="mt-4 flex justify-end">
+                <span class="text-sky-400 text-sm font-medium hover:underline">상세보기 →</span>
+            </div>
+        </div>
+    </div>
+    
+        </div>
+
+        <footer class="mt-12 text-center text-slate-500 text-sm">
+            © 2026 Soul's 자동사냥포털. All analytical models are powered by Gemini Flash.
+        </footer>
+    </div>
+</body>
+</html>

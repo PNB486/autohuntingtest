@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\S\\Desktop\\AI\\Gemini\\Stock\\logs\\.0a2a769ae1950ce0fed232f3fa3ce4aae3c663b0-audit.json",
+    "files": [
+        {
+            "date": 1779763326154,
+            "name": "C:\\Users\\S\\Desktop\\AI\\Gemini\\Stock\\logs\\mcp-puppeteer-2026-05-26.log",
+            "hash": "12cdcd040ab41b0b25d60bd44774cf3ba132e35ffb967b4ff293edda091c253d"
+        }
+    ],
+    "hashType": "sha256"
+}

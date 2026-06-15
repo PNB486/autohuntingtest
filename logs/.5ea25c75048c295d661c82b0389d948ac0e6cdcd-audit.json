@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\S\\Desktop\\AI\\Gemini\\Soul_Insight_Portal\\logs\\.5ea25c75048c295d661c82b0389d948ac0e6cdcd-audit.json",
+    "files": [
+        {
+            "date": 1775521591002,
+            "name": "C:\\Users\\S\\Desktop\\AI\\Gemini\\Soul_Insight_Portal\\logs\\mcp-puppeteer-2026-04-07.log",
+            "hash": "a6851c7fd621917c79426244f1e3aa1978908b2a639e3161b320eea27b0a0e53"
+        }
+    ],
+    "hashType": "sha256"
+}

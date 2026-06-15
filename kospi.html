@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul's 자동사냥포털 - 국내증시</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        body { background-color: #020617; color: #f1f5f9; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+        .card { background-color: #0f172a; border: 1px solid #1e293b; }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- 2-tier navigation -->
+        <nav class="mb-8">
+            <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
+                <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+                <div class="flex gap-6 text-sm font-medium text-slate-400">
+                    <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                    <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
+                    <a href="kospi.html" class="text-sky-400">국내증시</a>
+                    <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
+                    <a href="valuation_semi.html" class="hover:text-sky-400 transition-colors">종목분석</a>
+                </div>
+            </div>
+            <div class="flex gap-4 px-4 py-2 bg-slate-800/30 rounded-b-2xl border-x border-b border-slate-700 text-xs font-semibold text-slate-500 overflow-x-auto">
+                <a href="valuation_semi.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">반도체주</a>
+                <a href="valuation_defense.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">방산주</a>
+                <a href="valuation_battery.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">이차전지/전기차</a>
+                <a href="valuation_ai.html" class="px-3 py-1 bg-slate-700/50 rounded-lg hover:bg-sky-500/20 hover:text-sky-400 transition-all border border-slate-600">AI/플랫폼</a>
+            </div>
+        </nav>
+
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold mb-2 gradient-text">국내증시 자동사냥</h1>
+            <p class="text-slate-400 text-lg">주식 시장 현황 | 2026. 06. 19. 09:02</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            <!-- KOSPI Index Card -->
+            <div class="card p-6 rounded-2xl shadow-xl">
+                <h3 class="text-slate-400 text-sm font-semibold uppercase mb-4">KOSPI 지수</h3>
+                <div class="flex items-baseline gap-4 mb-6">
+                    <span class="text-5xl font-black text-sky-400">9,063.84</span>
+                    <span class="text-2xl font-bold text-rose-500">▲ 199.60 (+2.25%)</span>
+                </div>
+                <div class="relative h-[300px]">
+                    <canvas id="kospiChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Top 5 Stocks Table -->
+            <div class="card p-6 rounded-2xl shadow-xl">
+                <h3 class="text-slate-400 text-sm font-semibold uppercase mb-4">시가총액 상위 TOP 5</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-slate-700 text-slate-500 text-xs">
+                                <th class="pb-3">종목명</th>
+                                <th class="pb-3 text-right">현재가</th>
+                                <th class="pb-3 text-right">등락</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-slate-800/50">
+                                <td class="py-4 font-bold">삼성전자 (005930)</td>
+                                <td class="py-4 text-right">362,500</td>
+                                <td class="py-4 text-right text-rose-500">+4.62%</td>
+                            </tr>
+                            <tr class="border-b border-slate-800/50">
+                                <td class="py-4 font-bold">SK하이닉스 (000660)</td>
+                                <td class="py-4 text-right">2,685,000</td>
+                                <td class="py-4 text-right text-rose-500">+6.51%</td>
+                            </tr>
+                            <tr class="border-b border-slate-800/50">
+                                <td class="py-4 font-bold">LG에너지솔루션 (373220)</td>
+                                <td class="py-4 text-right">400,000</td>
+                                <td class="py-4 text-right text-blue-400">-3.85%</td>
+                            </tr>
+                            <tr class="border-b border-slate-800/50">
+                                <td class="py-4 font-bold">NAVER (035420)</td>
+                                <td class="py-4 text-right">235,000</td>
+                                <td class="py-4 text-right text-blue-400">-3.49%</td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 font-bold">현대차 (005380)</td>
+                                <td class="py-4 text-right">602,000</td>
+                                <td class="py-4 text-right text-blue-400">-2.59%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 수급 주체별 동향 Card -->
+            <div class="card p-6 rounded-2xl shadow-xl">
+                <h3 class="text-slate-400 text-sm font-semibold uppercase mb-4">수급 주체별 동향 (단위: 억)</h3>
+                <div class="space-y-6">
+                    <div class="relative h-[200px]">
+                        <canvas id="investorChart"></canvas>
+                    </div>
+                    <div class="grid grid-cols-1 gap-2 text-xs">
+                        <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
+                            <span class="text-slate-400 font-medium">외국인</span>
+                            <span class="text-blue-400 font-bold">-5,611억</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
+                            <span class="text-slate-400 font-medium">기관</span>
+                            <span class="text-rose-500 font-bold">+1,215억</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
+                            <span class="text-slate-400 font-medium">개인</span>
+                            <span class="text-rose-500 font-bold">+5,243억</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="card p-6 rounded-2xl border-l-4 border-sky-500">
+                <h4 class="text-sky-400 font-bold mb-3">[핵심 투자 포인트]</h4>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    미국-이란 간 평화 합의 타결로 지정학적 리스크가 해소되며 외국인과 기관의 강력한 동반 순매수세가 유입되어 지수가 급등함. 반도체 및 핵심 대형주 중심으로 강력한 주도주 랠리가 재개됨.
+                </p>
+            </div>
+            <div class="card p-6 rounded-2xl border-l-4 border-indigo-500">
+                <h4 class="text-indigo-400 font-bold mb-3">[2026 시나리오 분석]</h4>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    지정학적 리스크 완화로 지수가 단숨에 8,400선을 상회함. 미국의 주요 기술주 실적 안정세와 대형 IT 종목의 모멘텀 지속 여부에 따라 8,500선 돌파 시도가 지속될 전망.
+                </p>
+            </div>
+            <div class="card p-6 rounded-2xl border-l-4 border-rose-500">
+                <h4 class="text-rose-400 font-bold mb-3">[리스크 요인]</h4>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    원/달러 환율이 <strong>1,527.10원 (High Currency Risk Zone)</strong>에 머무름에 따라 수입 물가 압력과 외인 수급 불안정이 심화되고 있습니다. 이에 따라 모든 국내 상장 기업의 적정 밸류에이션에 15% 리스크 할인을 일괄 반영했습니다.
+                </p>
+            </div>
+        </div>
+
+        <footer class="text-center text-slate-500 text-sm py-10">
+            © 2026 Soul's Insight. All rights reserved. Data verified via Research.
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                const ctx = document.getElementById('kospiChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['09:00', '09:05', '09:10', '09:15', '09:20'],
+                        datasets: [{
+                            label: 'KOSPI Index',
+                            data: [8390, 8470, 8530, 8545.98, 9063.84],
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 3,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#64748b' } },
+                            y: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } }
+                        }
+                    }
+                });
+
+                // Investor Chart Init
+                const ctxInv = document.getElementById('investorChart').getContext('2d');
+                new Chart(ctxInv, {
+                    type: 'bar',
+                    data: {
+                        labels: ['외인', '기관', '개인'],
+                        datasets: [{
+                            data: [-5611, 1215, 5243],
+                            backgroundColor: (context) => {
+                                const val = context.raw;
+                                return val > 0 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(59, 130, 246, 0.8)';
+                            },
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } },
+                            y: { grid: { display: false }, ticks: { color: '#64748b' } }
+                        }
+                    }
+                });
+            } catch (e) { console.error('Chart init failed:', e); }
+        });
+    </script>
+</body>
+</html>
