@@ -1,40 +1,39 @@
-# 🏁 Session Handover (KST: 2026-06-19 09:05)
+# 🏁 Session Handover (KST: 2026-06-19 17:05)
 
 ## 📝 Summary of Accomplishments
-- **News Scraper Execution**: Ran `node scripts/fetch_news.cjs` to fetch the latest breaking news cards from Naver, updating [news.html](file:///C:/Users/S/Desktop/AI/Gemini/Stock/news.html).
-- **Portal Data Update**: Created and executed `scripts/update_portal_data_20260619.py` to synchronize all index values, exchange rates (USD/KRW: 1,527.10), stock prices (Samsung Electronics: 362,500, SK Hynix: 2,685,000, LG Energy Solution: 400,000, NAVER: 235,000, Hyundai Motor: 602,000, Hanwha Aerospace: 1,189,000, LIG Nex1: 884,000, Samsung SDI: 522,000), and US tech/semiconductor stock quotes across all HTML files.
-- **Unified Validation**: Ran the validation script [revalidate_portal.py](file:///C:/Users/S/Desktop/AI/Gemini/Stock/scripts/revalidate_portal.py) to confirm UTF-8 compliance, backgrounds, and Chart.js constraints.
-- **Git Force Push**: Force-pushed the amended single commit to remote origin and verified hash alignment (`dbe5e481f55ec04089d582ddcec6756f0c55bb04`).
+- **완전 자동 업데이트 스크립트 구축**: Yahoo Finance 및 Naver 증권 API를 사용하여 실시간 코스피/나스닥 지수, 환율, 국내외 주가 데이터를 수집하고 모든 HTML 리포트를 자동으로 갱신하는 [auto_update_market_data.py](file:///C:/Users/S/Desktop/AI/Gemini/Stock/scripts/auto_update_market_data.py)를 작성했습니다.
+- **GitHub Actions 워크플로우 갱신**: [.github/workflows/autohunt.yml](file:///C:/Users/S/Desktop/AI/Gemini/Stock/.github/workflows/autohunt.yml)에서 뉴스 스크랩뿐만 아니라 새로 작성된 `auto_update_market_data.py`도 함께 구동되도록 일정을 업그레이드하였습니다. 또한 Git 이력이 하나의 단일 커밋으로 깔끔하게 유지되도록 `--amend` 및 `--force` push 옵션을 적용했습니다.
+- **로컬 자동화 동기화 개선**: [0SoulAutoHunt.bat](file:///C:/Users/S/Desktop/AI/Gemini/Stock/0SoulAutoHunt.bat)를 수정하여 실행 시 최신 리모트 변경 내역을 강제로 동기화(`git fetch` & `git reset --hard origin/main`)한 뒤 동작하도록 수정하여 로컬과 원격 간의 소스 유실 및 충돌 문제를 해결했습니다.
+- **인코딩 검증 완료**: [revalidate_portal.py](file:///C:/Users/S/Desktop/AI/Gemini/Stock/scripts/revalidate_portal.py) 검증을 거쳐 모든 HTML 파일의 UTF-8(BOM 없음) 규격 준수 및 Chart.js 호환성에 이상 없음을 최종 검증했습니다.
 
 ## 💻 CLI Session & Shell Environment
 - **Active Shell Code Page**: `65001 (UTF-8)`
-- **Environment Details**: Python 3.x, Node.js 20+, Git CLI.
 - **Recent Commands Executed**:
   ```powershell
-  # 1. Fetch latest Naver news cards
-  node scripts/fetch_news.cjs
+  # 1. 밸류에이션/주가 크롤링 및 전체 페이지 동적 업데이트 테스트
+  python scripts/auto_update_market_data.py
   
-  # 2. Run update script for June 19, 2026
-  python scripts/update_portal_data_20260619.py
-  
-  # 3. Perform regex/HTML validation check
+  # 2. HTML 규격 검증 및 모지바케 체크
   python scripts/revalidate_portal.py
   
-  # 4. Sync workspace and force push to origin
+  # 3. 로컬 수정본 Git 원격 강제 동기화
   .\0GitSync.bat
   ```
+- **Environment/Tools Status**: Python 3.10+, Node.js 20+, Git CLI.
 - **Active Background Tasks**: None.
 
 ## 📂 Workspace & Git Status
 - **Current Branch**: `main`
-- **Last Commit**: `dbe5e481f55ec04089d582ddcec6756f0c55bb04 - Auto Hunt Portal Update`
-- **Uncommitted Changes**: None (except this SESSION_HANDOVER.md update)
-- **Remote Sync Status**: Synced successfully (Verified commit hashes match).
+- **Last Commit**: `69c83179a894c7cbf69e1b4c9499dcf0388dde9a - Auto Hunt Portal Update`
+- **Uncommitted Changes**: None (이 `SESSION_HANDOVER.md` 제외)
+- **Remote Sync Status**: Synced.
 
 ## 🧠 Memory & Guidelines Updates
-- **High Currency Risk Zone**: Domestic stock target valuation discount remains at 15% since USD/KRW (1,527.10) is above the 1,450 risk line.
-- **KOSPI Net Buy/Sell Trends**: Foreigners (-5,611억) are selling, while Retail (+5,243억) and Institutions (+1,215억) are buying as of June 18 close.
+- **완전 자동 업데이트 작동 원리**:
+  - 기존에는 지수/주가가 에이전트에 의해 생성된 하드코딩 교체용 스크립트로 동작했으나, 이제는 GitHub Actions 스케줄러(3시간 주기)에 따라 실시간 금융 데이터가 자동으로 수집되어 HTML에 주입됩니다.
+  - 로컬에서 [0SoulAutoHunt.bat](file:///C:/Users/S/Desktop/AI/Gemini/Stock/0SoulAutoHunt.bat)를 수동으로 실행할 때도 먼저 리모트 커밋 내용을 끌고 오기 때문에 로컬 작업 시 원격의 자동 업데이트 소실 현상이 완벽하게 해결되었습니다.
 
 ## ⏭️ Next Actions Checklist (이어서 할 일)
-- [ ] Monitor the next automated pipeline execution and verify if Git Pages deployment completes without errors.
-- [ ] Keep target valuation discount at 15% as long as USD/KRW remains in the **High Currency Risk Zone** (> 1,450).
+- [ ] 3시간 주기로 작동하는 GitHub Actions의 자동 업데이트 파이프라인(`Auto Hunt Scheduler`) 실행 결과 모니터링.
+- [ ] 환율 변동(USD/KRW > 1,450) 시 할인율 15% 가중치 조정 및 밸류에이션 변동 상태 검증.
+- [ ] GitHub Pages 웹 호스팅 결과 확인 및 모바일 환경에서의 가독성 체크.

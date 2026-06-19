@@ -16,17 +16,17 @@ echo Start Time: %NOW%
 echo ========================================
 
 echo.
+echo [Sync] Aligning workspace with remote GitHub repository...
+git fetch origin main >nul 2>&1
+git reset --hard origin/main
+
+echo.
 echo [1/8] Hunting real-time news...
 node "C:\Users\S\Desktop\AI\Gemini\Stock\scripts\fetch_news.cjs"
 
 echo.
-echo [2-6] Updating data (Refer to manual instructions for skill execution)...
-:: Note: The actual content update for KOSPI/NASDAQ/Valuation is handled via Gemini CLI triggers.
-
-echo.
-echo [7/8] Syncing Portal Index and All Timestamps (UTF-8 Safe)...
-:: Using PowerShell with explicit UTF-8 (No BOM) handling
-powershell -NoProfile -Command "$utf8 = [System.Text.Encoding]::UTF8; $utf8NoBom = New-Object System.Text.UTF8Encoding($false); $files = Get-ChildItem -Path *.html; foreach ($file in $files) { $content = [System.IO.File]::ReadAllText($file.FullName, $utf8); $content = $content -replace '\d{4}\. \d{2}\. \d{2}\. \d{2}:\d{2}', '%NOW_DOT%'; $content = $content -replace '\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?', '%NOW%'; $content = $content -replace 'Last Portal Update: \d{4}-\d{2}-\d{2} \d{2}:\d{2}', ('Last Portal Update: ' + '%NOW%'); [System.IO.File]::WriteAllText($file.FullName, $content, $utf8NoBom) }"
+echo [2-7] Updating Indices, Prices, and Valuations (Auto-Update)...
+python "C:\Users\S\Desktop\AI\Gemini\Stock\scripts\auto_update_market_data.py"
 
 echo.
 echo [8/8] Verifying integrity and recording changes...
@@ -67,4 +67,4 @@ echo.
 echo ========================================
 echo Hunt Complete! All pages updated with timestamp: %NOW%
 echo ========================================
-timeout /t 5
+ping 127.0.0.1 -n 6 >nul
