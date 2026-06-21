@@ -475,11 +475,8 @@ def main():
         content = re.sub(r'Last Updated:\s*\d{4}\.\s*\d{2}\.\s*\d{2}\.\s*\d{2}:\d{2}\s*KST', f'Last Updated: {date_str} KST', content)
         content = re.sub(r'주요 종목 적정가 및 리스크 진단\s*\|\s*\d{4}\.\s*\d{2}\.\s*\d{2}\.\s*\d{2}:\d{2}', f'주요 종목 적정가 및 리스크 진단 | {date_str}', content)
         
-        content = re.sub(r'(<span class="text-sky-400 font-mono"\s*id="exchangeRateVal">)[^<]*( KRW</span>)', rf'\g<1>{rate_val_comma} KRW\g<2>', content)
+        content = re.sub(r'(<span class="text-sky-400 font-mono"\s*id="exchangeRateVal">)[^<]*( KRW</span>)', rf'\g<1>{rate_val_comma}\g<2>', content)
         content = re.sub(r'(<input type="range"\s*id="exchangeRateSlider"\s*min="\d+"\s*max="\d+"\s*step="\d+"\s*value=")\d+(")', rf'\g<1>{rate_rounded}\g<2>', content)
-        content = re.sub(r'value="1512"', f'value="{rate_rounded}"', content)
-        content = re.sub(r'value="1527"', f'value="{rate_rounded}"', content)
-        content = re.sub(r'value="[0-9]+"', f'value="{rate_rounded}"', content)
         
         header_color = "red-500" if usd_data['price'] > 1450 else "emerald-500"
         header_text = "⚠️ High Currency Risk Zone" if usd_data['price'] > 1450 else "✅ Normal Currency Zone"
@@ -574,11 +571,8 @@ def main():
         content = re.sub(r'Last Updated:\s*\d{4}\.\s*\d{2}\.\s*\d{2}\.\s*\d{2}:\d{2}\s*KST', f'Last Updated: {date_str} KST', content)
         content = re.sub(r'매크로 변수에 따른 종목별 할인율 및 적정가 리계산\s*\|\s*\d{4}\.\s*\d{2}\.\s*\d{2}\.\s*\d{2}:\d{2}', f'매크로 변수에 따른 종목별 할인율 및 적정가 리계산 | {date_str}', content)
         
-        content = re.sub(r'(<span class="text-sky-400 font-mono"\s*id="exchangeRateVal">)[^<]*( KRW</span>)', rf'\g<1>{rate_val_comma} KRW\g<2>', content)
+        content = re.sub(r'(<span class="text-sky-400 font-mono"\s*id="exchangeRateVal">)[^<]*( KRW</span>)', rf'\g<1>{rate_val_comma}\g<2>', content)
         content = re.sub(r'(<input type="range"\s*id="exchangeRateSlider"\s*min="\d+"\s*max="\d+"\s*step="\d+"\s*value=")\d+(")', rf'\g<1>{rate_rounded}\g<2>', content)
-        content = re.sub(r'value="1512"', f'value="{rate_rounded}"', content)
-        content = re.sub(r'value="1527"', f'value="{rate_rounded}"', content)
-        content = re.sub(r'value="[0-9]+"', f'value="{rate_rounded}"', content)
         
         content = update_demo_stock_price(content, "삼성전자", dom_prices['삼성전자 (005930)']['price_str'])
         content = update_demo_stock_price(content, "SK하이닉스", dom_prices['SK하이닉스 (000660)']['price_str'])
