@@ -40,11 +40,11 @@
         <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
             <div>
                 <h1 class="text-4xl font-extrabold mb-2 gradient-text">반도체주 자동사냥</h1>
-                <p class="text-slate-400">주요 종목 적정가 및 리스크 진단 | 2026. 06. 23. 09:04</p>
+                <p class="text-slate-400">주요 종목 적정가 및 리스크 진단 | 2026. 06. 23. 13:41</p>
             </div>
             <div class="risk-badge px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2" id="headerRiskBadge">
                 <span id="headerRiskLabel">⚠️ High Currency Risk Zone</span>
-                <span class="bg-red-500 text-white px-2 py-0.5 rounded" id="headerRiskVal">1,540.38</span>
+                <span class="bg-red-500 text-white px-2 py-0.5 rounded" id="headerRiskVal">1,534.86</span>
             </div>
         </header>
 
@@ -60,9 +60,9 @@
                 <div class="space-y-2">
                     <div class="flex justify-between items-center text-sm font-semibold">
                         <span class="text-slate-300">원/달러 환율 (USD/KRW)</span>
-                        <span class="text-sky-400 font-mono" id="exchangeRateVal">1,540.38 KRW</span>
+                        <span class="text-sky-400 font-mono" id="exchangeRateVal">1,534.86 KRW</span>
                     </div>
-                    <input type="range" id="exchangeRateSlider" min="1300" max="1700" step="1" value="1540" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+                    <input type="range" id="exchangeRateSlider" min="1300" max="1700" step="1" value="1535" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
                     <div class="flex justify-between text-[10px] text-slate-500 font-mono">
                         <span>1,300</span>
                         <span>1,450 (위험 임계값)</span>
@@ -98,7 +98,7 @@
                         <span class="text-slate-500 text-sm">005930.KS</span>
                     </div>
                     <div class="text-right">
-                        <div class="text-3xl font-bold text-sky-400">353,500 <span class="text-sm">KRW</span></div>
+                        <div class="text-3xl font-bold text-sky-400">332,000 <span class="text-sm">KRW</span></div>
                         <div class="text-rose-500 text-sm font-semibold">▲ 16,000 (+4.62%)</div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                         <span class="text-slate-500 text-sm">000660.KS</span>
                     </div>
                     <div class="text-right">
-                        <div class="text-3xl font-bold text-sky-400">2,919,000 <span class="text-sm">KRW</span></div>
+                        <div class="text-3xl font-bold text-sky-400">2,695,000 <span class="text-sm">KRW</span></div>
                         <div class="text-rose-500 text-sm font-semibold">▲ 164,000 (+6.51%)</div>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
 
         <footer class="text-center text-slate-500 text-sm py-10 border-t border-slate-800">
             © 2026 Soul's Insight. All rights reserved. Data verified via Research.<br>
-            Last Updated: 2026. 06. 23. 09:04 KST
+            Last Updated: 2026. 06. 23. 13:41 KST
         </footer>
     </div>
 
@@ -296,9 +296,9 @@
             const headerRiskVal = document.getElementById('headerRiskVal');
             
             const samsungBaseTarget = 570000;
-            const samsungCurrentPrice = 353500;
+            const samsungCurrentPrice = 332000;
             const hynixBaseTarget = 2500000;
-            const hynixCurrentPrice = 2919000;
+            const hynixCurrentPrice = 2695000;
             
             // Baseline profits data
             const samsungBaseProfits = [12.4, 14.1, 15.2, 19.5, 25.1];

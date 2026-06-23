@@ -36,7 +36,7 @@
 
         <header class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-2 gradient-text">국내증시 자동사냥</h1>
-            <p class="text-slate-400 text-lg">주식 시장 현황 | 2026. 06. 23. 09:04</p>
+            <p class="text-slate-400 text-lg">주식 시장 현황 | 2026. 06. 23. 13:41</p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
@@ -44,8 +44,8 @@
             <div class="card p-6 rounded-2xl shadow-xl">
                 <h3 class="text-slate-400 text-sm font-semibold uppercase mb-4">KOSPI 지수</h3>
                 <div class="flex items-baseline gap-4 mb-6">
-                    <span class="text-5xl font-black text-sky-400">9,114.55</span>
-                    <span class="text-2xl font-bold text-rose-500">▲ 62.13 (+0.69%)</span>
+                    <span class="text-5xl font-black text-sky-400">8,612.87</span>
+                    <span class="text-2xl font-bold text-blue-400">▼ 501.68 (-5.50%)</span>
                 </div>
                 <div class="relative h-[300px]">
                     <canvas id="kospiChart"></canvas>
@@ -67,28 +67,28 @@
                         <tbody class="text-sm">
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">삼성전자 (005930)</td>
-                                <td class="py-4 text-right">353,500</td>
-                                <td class="py-4 text-right text-blue-400">-0.14%</td>
+                                <td class="py-4 text-right">332,000</td>
+                                <td class="py-4 text-right text-blue-400">-6.08%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">SK하이닉스 (000660)</td>
-                                <td class="py-4 text-right">2,919,000</td>
-                                <td class="py-4 text-right text-rose-500">+5.61%</td>
+                                <td class="py-4 text-right">2,695,000</td>
+                                <td class="py-4 text-right text-blue-400">-7.67%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">LG에너지솔루션 (373220)</td>
-                                <td class="py-4 text-right">385,500</td>
-                                <td class="py-4 text-right text-blue-400">-4.70%</td>
+                                <td class="py-4 text-right">372,000</td>
+                                <td class="py-4 text-right text-blue-400">-3.50%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">NAVER (035420)</td>
-                                <td class="py-4 text-right">222,000</td>
-                                <td class="py-4 text-right text-blue-400">-3.27%</td>
+                                <td class="py-4 text-right">206,000</td>
+                                <td class="py-4 text-right text-blue-400">-7.21%</td>
                             </tr>
                             <tr>
                                 <td class="py-4 font-bold">현대차 (005380)</td>
-                                <td class="py-4 text-right">581,000</td>
-                                <td class="py-4 text-right text-blue-400">-5.22%</td>
+                                <td class="py-4 text-right">527,000</td>
+                                <td class="py-4 text-right text-blue-400">-9.29%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -105,15 +105,15 @@
                     <div class="grid grid-cols-1 gap-2 text-xs">
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">외국인</span>
-                            <span class="text-blue-400 font-bold">-9,040억</span>
+                            <span class="text-blue-400 font-bold">-39,583억</span>
                         </div>
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">기관</span>
-                            <span class="text-rose-500 font-bold">+362억</span>
+                            <span class="text-blue-400 font-bold">-19,933억</span>
                         </div>
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">개인</span>
-                            <span class="text-rose-500 font-bold">+8,560억</span>
+                            <span class="text-rose-500 font-bold">+59,047억</span>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                         labels: ['09:00', '09:05', '09:10', '09:15', '09:20'],
                         datasets: [{
                             label: 'KOSPI Index',
-                            data: [8545.98, 8726.6, 8864.24, 9063.84, 9114.55],
+                            data: [8864.24, 9063.84, 9052.42, 9114.55, 8612.87],
                             borderColor: '#38bdf8',
                             backgroundColor: 'rgba(56, 189, 248, 0.1)',
                             fill: true,
@@ -184,7 +184,7 @@
                     data: {
                         labels: ['외인', '기관', '개인'],
                         datasets: [{
-                            data: [-9040, 362, 8560],
+                            data: [-39583, -19933, 59047],
                             backgroundColor: (context) => {
                                 const val = context.raw;
                                 return val > 0 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(59, 130, 246, 0.8)';

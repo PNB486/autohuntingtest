@@ -320,8 +320,8 @@ def main():
     def update_stock_price_block(content, stock_name, new_price_str, change_desc):
         color = "rose-500" if "▲" in change_desc or "+" in change_desc else ("blue-400" if "▼" in change_desc or "-" in change_desc else "slate-400")
         escaped_name = re.escape(stock_name)
-        pattern = rf'(<h2 class="text-2xl font-bold"\s*>{escaped_name}</h2>.*?<div class="text-right">\s*<div class="text-3xl font-bold text-sky-400">)[^<]+(<span class="text-sm">KRW</span></div>\s*<div class=")(?:text-rose-500|text-blue-400|text-slate-400)(" text-sm font-semibold">)[^<]+(</div>)'
-        content, count = re.subn(pattern, rf'\g<1>{new_price_str} \g<2>{color}\g<3>{change_desc}\g<4>', content, flags=re.DOTALL)
+        pattern = rf'(<h2 class="text-2xl font-bold"\s*>{escaped_name}</h2>.*?<div class="text-right">\s*<div class="text-3xl font-bold text-sky-400">)[^<]+(<span class="text-sm">KRW</span></div>\s*<div class=")(?:text-rose-500|text-blue-400|text-slate-400|text-emerald-400)( text-sm font-semibold">)[^<]+(</div>)'
+        content, count = re.subn(pattern, rf'\g<1>{new_price_str} \g<2>text-{color}\g<3>{change_desc}\g<4>', content, flags=re.DOTALL)
         return content
 
     def update_demo_stock_price(content, stock_name, new_price_str):
