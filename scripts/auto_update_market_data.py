@@ -17,20 +17,119 @@ def fetch_yahoo_chart(symbol, range_str="1d", interval="1m"):
                 meta = result['meta']
                 
                 close_prices = []
+                timestamps = []
                 if 'indicators' in result and 'quote' in result['indicators'] and len(result['indicators']['quote']) > 0:
                     quotes = result['indicators']['quote'][0]
-                    if 'close' in quotes:
-                        close_prices = [p for p in quotes['close'] if p is not None]
+                    raw_closes = quotes.get('close', [])
+                    raw_timestamps = result.get('timestamp', [])
+                    for i in range(min(len(raw_closes), len(raw_timestamps))):
+                        if raw_closes[i] is not None:
+                            close_prices.append(raw_closes[i])
+                            timestamps.append(raw_timestamps[i])
                         
                 return {
                     'price': meta.get('regularMarketPrice'),
                     'previous_close': meta.get('chartPreviousClose'),
-                    'history': close_prices
+                    'history': close_prices,
+                    'timestamps': timestamps
                 }
         except Exception as e:
             print(f"Attempt {attempt+1} failed to fetch {symbol}: {e}")
             time.sleep(1)
     return None
+
+def fetch_naver_index(symbol):
+    url = f"https://m.stock.naver.com/api/index/{symbol}/basic"
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1'})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as res:
+            data = json.loads(res.read().decode('utf-8'))
+            price = float(data['closePrice'].replace(',', ''))
+            diff = float(data['compareToPreviousClosePrice'].replace(',', ''))
+            pct = float(data['fluctuationsRatio'])
+            direction = data['compareToPreviousPrice']['name']
+            if direction == 'FALLING':
+                diff = -abs(diff)
+                pct = -abs(pct)
+            else:
+                diff = abs(diff)
+                pct = abs(pct)
+            prev_close = price - diff
+            
+            # Intraday points
+            open_p = float(data.get('openPrice', '0').replace(',', ''))
+            high_p = float(data.get('highPrice', '0').replace(',', ''))
+            low_p = float(data.get('lowPrice', '0').replace(',', ''))
+            
+            return {
+                'price': price,
+                'previous_close': prev_close,
+                'change_pct': pct,
+                'change_diff': diff,
+                'open': open_p,
+                'high': high_p,
+                'low': low_p
+            }
+    except Exception as e:
+        print(f"Failed to fetch Naver index {symbol}: {e}")
+        return None
+
+def fetch_naver_stock(symbol):
+    url = f"https://m.stock.naver.com/api/stock/{symbol}/basic"
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1'})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as res:
+            data = json.loads(res.read().decode('utf-8'))
+            price = float(data['closePrice'].replace(',', ''))
+            diff = float(data['compareToPreviousClosePrice'].replace(',', ''))
+            pct = float(data['fluctuationsRatio'])
+            direction = data['compareToPreviousPrice']['name']
+            if direction == 'FALLING':
+                diff = -abs(diff)
+                pct = -abs(pct)
+            else:
+                diff = abs(diff)
+                pct = abs(pct)
+            prev_close = price - diff
+            return {
+                'price': price,
+                'previous_close': prev_close,
+                'change_pct': pct,
+                'change_diff': diff
+            }
+    except Exception as e:
+        print(f"Failed to fetch Naver stock {symbol}: {e}")
+        return None
+
+def fetch_naver_index_history(symbol, page_size=5):
+    url = f"https://m.stock.naver.com/api/index/{symbol}/price?pageSize={page_size}&page=1"
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1'})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as res:
+            data = json.loads(res.read().decode('utf-8'))
+            history = []
+            dates = []
+            for item in reversed(data):
+                history.append(float(item['closePrice'].replace(',', '')))
+                dt = datetime.datetime.strptime(item['localTradedAt'], '%Y-%m-%d')
+                dates.append(dt.strftime('%a'))
+                
+            # Today's intraday details from the newest item (index 0)
+            today_item = data[0]
+            open_p = float(today_item['openPrice'].replace(',', ''))
+            high_p = float(today_item['highPrice'].replace(',', ''))
+            low_p = float(today_item['lowPrice'].replace(',', ''))
+            
+            return {
+                'history': history,
+                'labels': dates,
+                'open': open_p,
+                'high': high_p,
+                'low': low_p
+            }
+    except Exception as e:
+        print(f"Failed to fetch Naver history for {symbol}: {e}")
+        return None
 
 def fetch_naver_kospi_trend():
     url = "https://m.stock.naver.com/api/index/KOSPI/trend"
@@ -77,10 +176,10 @@ def main():
     date_korean = f"{kst_now.year}년 {kst_now.month}월 {kst_now.day}일 {kst_now.hour}시 {kst_now.minute:02d}분"
     print(f"Current KST Time: {date_str}")
     
-    # 2. Fetch Macro indices
+    # 2. Fetch Macro indices (KOSPI from Naver, USD/KRW and NASDAQ from Yahoo)
     print("Fetching indices and exchange rates...")
     usd_data = fetch_yahoo_chart("USDKRW=X")
-    kospi_data = fetch_yahoo_chart("^KS11")
+    kospi_data = fetch_naver_index("KOSPI")
     nasdaq_data = fetch_yahoo_chart("^IXIC")
     
     if not usd_data or not kospi_data or not nasdaq_data:
@@ -93,8 +192,8 @@ def main():
     discount_pct = 15 if usd_data['price'] > 1450 else 0
     
     kospi_val = f"{kospi_data['price']:,.2f}"
-    kospi_diff = kospi_data['price'] - kospi_data['previous_close']
-    kospi_pct = (kospi_diff / kospi_data['previous_close']) * 100
+    kospi_diff = kospi_data['change_diff']
+    kospi_pct = kospi_data['change_pct']
     kospi_sign = "▲" if kospi_diff > 0 else "▼" if kospi_diff < 0 else ""
     kospi_change_full = f"{kospi_sign} {abs(kospi_diff):,.2f} ({'+' if kospi_diff >= 0 else ''}{kospi_pct:.2f}%)"
     kospi_change_only = f"{kospi_sign} {kospi_pct:.2f}%"
@@ -110,43 +209,65 @@ def main():
     print(f"  KOSPI: {kospi_val} ({kospi_change_full})")
     print(f"  NASDAQ: {nasdaq_val} ({nasdaq_change_full})")
     
-    # Fetch historical data for KOSPI and NASDAQ (last 5 daily closes)
-    kospi_hist_data = fetch_yahoo_chart("^KS11", range_str="5d", interval="1d")
+    # Fetch historical data for KOSPI (from Naver) and NASDAQ (from Yahoo)
+    kospi_hist_data = fetch_naver_index_history("KOSPI", 5)
     nasdaq_hist_data = fetch_yahoo_chart("^IXIC", range_str="5d", interval="1d")
     
-    kospi_history = [round(p, 2) for p in kospi_hist_data['history'][-5:]] if kospi_hist_data else []
+    kospi_history = kospi_hist_data['history'] if kospi_hist_data else []
+    kospi_labels = kospi_hist_data['labels'] if kospi_hist_data else []
+    
     nasdaq_history = [round(p, 2) for p in nasdaq_hist_data['history'][-5:]] if nasdaq_hist_data else []
     
     # Make sure we have 5 elements by appending the current price if needed
     if len(kospi_history) < 5:
-        kospi_history = [8545.98, 8726.60, 8864.24, 9063.84, round(kospi_data['price'], 2)]
+        kospi_history = [8545.98, 8726.60, 8864.24, 8203.84, round(kospi_data['price'], 2)]
+        kospi_labels = ['Thu', 'Fri', 'Mon', 'Tue', 'Wed']
     if len(nasdaq_history) < 5:
         nasdaq_history = [26100.0, 26200.0, 26400.0, 26021.66, round(nasdaq_data['price'], 2)]
         
+    # Today's KOSPI intraday data points based on Open, Low, High, Current
+    kospi_intraday_data = [
+        round(kospi_hist_data['open'], 2) if kospi_hist_data else round(kospi_data['price'], 2),
+        round(kospi_hist_data['low'], 2) if kospi_hist_data else round(kospi_data['price'], 2),
+        round(kospi_hist_data['high'], 2) if kospi_hist_data else round(kospi_data['price'], 2),
+        round(kospi_data['price'], 2)
+    ]
+        
+    nasdaq_labels = []
+    if nasdaq_hist_data and 'timestamps' in nasdaq_hist_data and len(nasdaq_hist_data['timestamps']) >= len(nasdaq_history):
+        hist_len = len(nasdaq_history)
+        for ts in nasdaq_hist_data['timestamps'][-hist_len:]:
+            dt = datetime.datetime.utcfromtimestamp(ts)
+            nasdaq_labels.append(dt.strftime('%a'))
+    if len(nasdaq_labels) < len(nasdaq_history):
+        nasdaq_labels = ['Thu', 'Fri', 'Mon', 'Tue', 'Wed'][-len(nasdaq_history):]
+        
     print(f"  KOSPI History: {kospi_history}")
+    print(f"  KOSPI Labels: {kospi_labels}")
+    print(f"  KOSPI Intraday: {kospi_intraday_data}")
     print(f"  NASDAQ History: {nasdaq_history}")
+    print(f"  NASDAQ Labels: {nasdaq_labels}")
     
-    # 3. Fetch Domestic Stock prices
+    # 3. Fetch Domestic Stock prices (from Naver)
     print("Fetching domestic stocks...")
     dom_symbols = {
-        '삼성전자 (005930)': '005930.KS',
-        'SK하이닉스 (000660)': '000660.KS',
-        'LG에너지솔루션 (373220)': '373220.KS',
-        'NAVER (035420)': '035420.KS',
-        '현대차 (005380)': '005380.KS',
-        '한화에어로스페이스': '012450.KS',
-        'LIG넥스원': '079550.KS',
-        '삼성SDI': '006400.KS'
+        '삼성전자 (005930)': '005930',
+        'SK하이닉스 (000660)': '000660',
+        'LG에너지솔루션 (373220)': '373220',
+        'NAVER (035420)': '035420',
+        '현대차 (005380)': '005380',
+        '한화에어로스페이스': '012450',
+        'LIG넥스원': '079550',
+        '삼성SDI': '006400'
     }
     
     dom_prices = {}
     for name, sym in dom_symbols.items():
-        data = fetch_yahoo_chart(sym)
+        data = fetch_naver_stock(sym)
         if data:
             price = int(data['price'])
-            prev = int(data['previous_close'])
-            diff = price - prev
-            pct = (diff / prev) * 100 if prev else 0.0
+            diff = int(data['change_diff'])
+            pct = data['change_pct']
             
             sign_arrow = "▲" if diff > 0 else "▼" if diff < 0 else ""
             sign_plus = "+" if diff >= 0 else ""
@@ -253,13 +374,13 @@ def main():
 
     def update_index_card(content, index_name, index_val, change_str):
         color = "rose-500" if "▲" in change_str or "+" in change_str else ("blue-400" if "▼" in change_str or "-" in change_str else "slate-400")
-        card_html = """<h3 class="text-slate-400 text-sm font-semibold uppercase mb-4">{} 지수</h3>
-                <div class="flex items-baseline gap-4 mb-6">
-                    <span class="text-5xl font-black text-sky-400">{}</span>
-                    <span class="text-2xl font-bold text-{}">{}</span>
-                </div>""".format(index_name, index_val, color, change_str)
-        pattern = r'<h3 class="text-slate-400 text-sm font-semibold uppercase mb-4">{} 지수</h3>\s*<div class="flex items-baseline gap-4 mb-6">.*?</div>'.format(index_name)
-        content, count = re.subn(pattern, card_html, content, flags=re.DOTALL)
+        pattern = r'(<h3 class="text-slate-400 text-sm font-semibold uppercase(?: mb-4)?">\s*' + re.escape(index_name) + r'\s+지수\s*</h3>.*?<div class="flex items-baseline gap-4 mb-6">\s*<span class="text-5xl font-black text-sky-400">)[^<]*(</span>\s*<span class="text-2xl font-bold text-)(?:rose-500|blue-400|emerald-400|slate-400)(">)[^<]*(</span>)'
+        replacement = rf'\g<1>{index_val}\g<2>{color}\g<3>{change_str}\g<4>'
+        content, count = re.subn(pattern, replacement, content, flags=re.DOTALL)
+        if count == 0:
+            print(f"  [WARNING] Failed to update index card text for {index_name}!")
+        else:
+            print(f"  [OK] Index card text for {index_name} updated successfully (count: {count}).")
         return content
 
     def update_static_risk_badge(content, rate_val):
@@ -267,9 +388,11 @@ def main():
         if rate_num > 1450:
             badge_text = "⚠️ High Currency Risk Zone ({})".format(rate_val)
             badge_style = "background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444;"
+            content = re.sub(r'(?:High Currency Risk Zone|Normal Currency Zone)\s*\([\d.,]+\)', f'High Currency Risk Zone ({rate_val})', content)
         else:
             badge_text = "✅ Normal Currency Zone ({})".format(rate_val)
             badge_style = "background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981;"
+            content = re.sub(r'(?:High Currency Risk Zone|Normal Currency Zone)\s*\([\d.,]+\)', f'Normal Currency Zone ({rate_val})', content)
             
         content = re.sub(
             r'\.risk-badge\s*\{\s*background-color:[^;]+;\s*border:[^;]+;\s*color:[^;]+;\s*\}',
@@ -417,7 +540,10 @@ def main():
         retail_color = "rose-500" if "+" in inv_trend['personal'] else "blue-400"
         content = re.sub(pattern_retail, rf'\g<1>{retail_color}\g<3>{inv_trend["personal"]}억\g<4>', content)
 
-        content = re.sub(r'data:\s*\[\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*\]', f"data: {kospi_history}", content)
+        # Update KOSPI chart labels and data dynamically for tabbed view
+        content = re.sub(r'const\s+intradayData\s*=\s*\[[^\]]*\];', f"const intradayData = {kospi_intraday_data};", content)
+        content = re.sub(r'const\s+dailyLabels\s*=\s*\[[^\]]*\];', f"const dailyLabels = {kospi_labels};", content)
+        content = re.sub(r'const\s+dailyData\s*=\s*\[[^\]]*\];', f"const dailyData = {kospi_history};", content)
         content = re.sub(r'data:\s*\[\s*-?\d+\s*,\s*-?\d+\s*,\s*-?\d+\s*\]', f"data: {inv_chart_data}", content)
         
         content = content.replace("1,513.40원", f"{rate_val_comma}원")
@@ -461,6 +587,10 @@ def main():
         for name in ['엔비디아 (NVDA)', '애플 (AAPL)', '마이크로소프트 (MSFT)', '알파벳 (GOOGL)', '아마존 (AMZN)', 'TSMC (TSM)', '브로드컴 (AVGO)', 'AMD (AMD)', 'ASML (ASML)']:
             content, _ = update_stock_in_html(content, name, us_prices[name]['price_str'], us_prices[name]['change_only'])
             
+        # Update NASDAQ chart labels dynamically to match the 5-day closes
+        pattern_labels = r'(const ctx = document\.getElementById\(\'nasdaqChart\'\).*?labels:\s*\[)[^\]]+(\],\s*datasets:)'
+        content = re.sub(pattern_labels, rf"\g<1>{', '.join([f'\"{l}\"' for l in nasdaq_labels])}\g<2>", content, flags=re.DOTALL)
+        
         content = re.sub(r'data:\s*\[\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*,\s*[0-9.]+\s*\]', f"data: {nasdaq_history}", content)
         
         with open(nasdaq_path, 'w', encoding='utf-8', newline='') as f:
@@ -482,6 +612,10 @@ def main():
         header_text = "⚠️ High Currency Risk Zone" if usd_data['price'] > 1450 else "✅ Normal Currency Zone"
         content = re.sub(r'<span id="headerRiskLabel">[^<]+</span>', f'<span id="headerRiskLabel">{header_text}</span>', content)
         content = re.sub(r'<span class="bg-(?:red-500|emerald-500) text-white px-2 py-0.5 rounded" id="headerRiskVal">[^<]+</span>', f'<span class="bg-{header_color} text-white px-2 py-0.5 rounded" id="headerRiskVal">{rate_val_comma}</span>', content)
+        
+        # Update inline risk factors
+        risk_text = "High Currency Risk Zone" if usd_data['price'] > 1450 else "Normal Currency Zone"
+        content = re.sub(r'원/달러 환율이 <strong>[\d.,]+원 \((?:High Currency Risk Zone|Normal Currency Zone)\)</strong>', f'원/달러 환율이 <strong>{rate_val_comma}원 ({risk_text})</strong>', content)
         
         pattern_samsung_price = r'(삼성전자</h2>.*?<div class="text-3xl font-bold text-sky-400">)[^<]+(<span class="text-sm">KRW</span>)'
         content = re.sub(pattern_samsung_price, rf'\g<1>{dom_prices["삼성전자 (005930)"]["price_str"]} \g<2>', content, flags=re.DOTALL)
@@ -549,6 +683,18 @@ def main():
         content = update_ai_usd_krw(content, rate_val_comma)
         content = update_ai_description_text(content, rate_val_comma)
         
+        # Update the top right warning badge and description disclaimer
+        if usd_data['price'] > 1450:
+            badge_html = f"""<div class="inline-flex items-center px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold animate-pulse">
+                    ⚠️ 고환율 리스크 존 ({rate_val_comma})
+                </div>"""
+        else:
+            badge_html = f"""<div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+                    ✅ 정상 환율 존 ({rate_val_comma})
+                </div>"""
+        content = re.sub(r'<div class="inline-flex items-center px-3 py-1 rounded-full bg-(?:red-500|emerald-500)/10 border border-(?:red-500|emerald-500)/20 text-(?:red-400|emerald-400) text-xs font-bold(?: animate-pulse)?">\s*[^<]+\s*</div>', badge_html, content, flags=re.DOTALL)
+        content = re.sub(r'환율 [\d.,]+원 돌파에 따라', f'환율 {rate_val_comma}원 돌파에 따라', content)
+        
         nvda_data = us_prices['엔비디아 (NVDA)']
         pattern_nvda_price = r'(<div class="text-sky-400 text-xs font-bold mb-2 uppercase">NVIDIA \(NVDA\)</div>\s*<div class="text-3xl font-black metric-value mb-1">)[^<]+(</div>)'
         content = re.sub(pattern_nvda_price, rf'\g<1>{nvda_data["price_str"]}\g<2>', content, flags=re.DOTALL)
@@ -573,6 +719,11 @@ def main():
         
         content = re.sub(r'(<span class="text-sky-400 font-mono"\s*id="exchangeRateVal">)[^<]*( KRW</span>)', rf'\g<1>{rate_val_comma}\g<2>', content)
         content = re.sub(r'(<input type="range"\s*id="exchangeRateSlider"\s*min="\d+"\s*max="\d+"\s*step="\d+"\s*value=")\d+(")', rf'\g<1>{rate_rounded}\g<2>', content)
+        
+        header_color = "red-500" if usd_data['price'] > 1450 else "emerald-500"
+        header_text = "⚠️ High Currency Risk Zone" if usd_data['price'] > 1450 else "✅ Normal Currency Zone"
+        content = re.sub(r'<span id="headerRiskLabel">[^<]+</span>', f'<span id="headerRiskLabel">{header_text}</span>', content)
+        content = re.sub(r'<span class="bg-(?:red-500|emerald-500) text-white px-2 py-0.5 rounded" id="headerRiskVal">[^<]+</span>', f'<span class="bg-{header_color} text-white px-2 py-0.5 rounded" id="headerRiskVal">{rate_val_comma}</span>', content)
         
         content = update_demo_stock_price(content, "삼성전자", dom_prices['삼성전자 (005930)']['price_str'])
         content = update_demo_stock_price(content, "SK하이닉스", dom_prices['SK하이닉스 (000660)']['price_str'])

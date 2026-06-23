@@ -22,3 +22,18 @@
   git commit --amend -m "Auto Hunt Portal Update"
   git push origin main --force
   ```
+  
+## 5. 국내 금융 데이터 수집처 규칙 (Naver Finance API 사용 필수)
+- 코스피(KOSPI) 지수, 투자자별 수급 동향, 국내 개별 종목(삼성전자, SK하이닉스, LG에너지솔루션, NAVER, 현대차, 한화에어로스페이스, LIG넥스원, 삼성SDI 등)의 가격 데이터 수집 시, Yahoo Finance API 대신 **네이버 금융 모바일 API**를 사용해야 합니다.
+- **Naver API 엔드포인트**:
+  - 실시간 지수/종가: `https://m.stock.naver.com/api/index/{지수명}/basic` (KOSPI 등)
+  - 실시간 종목 시세: `https://m.stock.naver.com/api/stock/{종목코드}/basic`
+  - 역사적 가격 추이: `https://m.stock.naver.com/api/index/{지수명}/price?pageSize={개수}&page=1`
+- 국내 장 운영 시간(09:00 ~ 15:30 KST) 중 Yahoo Finance의 국내 주가 데이터는 지연 또는 전날 종가 고정 오류가 발생하므로 실시간성 유지를 위해 네이버 금융 모바일 API 조회가 필수적입니다.
+
+## 6. KOSPI 지수 이원화 차트 구현 규칙 (당일 시간별 & 5일 요일별)
+- `kospi.html`의 KOSPI 차트는 사용자가 **당일 (시간별)**과 **5일 (요일별)** 뷰를 탭으로 전환할 수 있는 이원화 구조를 유지해야 합니다.
+  - **당일 (시간별)**: 당일 네이버 금융 API에서 추출한 `시가(Open)`, `장중 최저가(Low)`, `장중 최고가(High)`, `현재가(Current)`를 결합해 `[open, low, high, price]` 형태의 실시간 4포인트 차트로 구성합니다.
+  - **5일 (요일별)**: 네이버 금융 역사적 API에서 가져온 최근 5거래일의 종가와 실제 요일 이름(예: `['Thu', 'Fri', 'Mon', 'Tue', 'Wed']`)을 결합하여 구성합니다.
+- `scripts/auto_update_market_data.py`는 `kospi.html` 내부의 `intradayData`, `dailyLabels`, `dailyData` JS 변수 그룹을 정규식을 사용해 안전하게 업데이트해야 합니다.
+- **지수 카드 텍스트 업데이트 규칙 (중요)**: `kospi.html` 및 `nasdaq.html` 등 대시보드 지수 카드의 지수 및 등락률 텍스트를 업데이트하는 `update_index_card` 함수는 탭 전환 버튼 유무 등 카드 헤더 구조가 파일마다 다를 수 있으므로, 헤더 `<h3>` 태그부터 실제 수치가 노출되는 `span` 태그까지 유연하게 매칭할 수 있는 정규식 패턴(예: `.*?` 와 `re.escape`)을 사용하여 업데이트해야 하며 업데이트 성공 여부를 항상 검증해야 합니다.
