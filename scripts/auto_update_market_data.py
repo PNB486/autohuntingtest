@@ -696,12 +696,12 @@ def main():
         content = re.sub(r'환율 [\d.,]+원 돌파에 따라', f'환율 {rate_val_comma}원 돌파에 따라', content)
         
         nvda_data = us_prices['엔비디아 (NVDA)']
-        pattern_nvda_price = r'(<div class="text-sky-400 text-xs font-bold mb-2 uppercase">NVIDIA \(NVDA\)</div>\s*<div class="text-3xl font-black metric-value mb-1">)[^<]+(</div>)'
+        pattern_nvda_price = r'(<div class="(?:text-sky-400|text-slate-500) text-xs font-bold mb-2 uppercase">NVIDIA \(NVDA\)</div>\s*<div class="text-3xl font-black metric-value mb-1">)[^<]+(</div>)'
         content = re.sub(pattern_nvda_price, rf'\g<1>{nvda_data["price_str"]}\g<2>', content, flags=re.DOTALL)
         
         nvda_change_color = "text-emerald-400" if "+" in nvda_data['change_only'] else "text-red-400"
-        pattern_nvda_change = r'(<div class="text-sky-400 text-xs font-bold mb-2 uppercase">NVIDIA \(NVDA\)</div>\s*<div class="text-3xl font-black metric-value mb-1">[^<]+</div>\s*<div class=")(?:text-emerald-400|text-red-400)(" text-sm font-bold">)[^<]+(</div>)'
-        content = re.sub(pattern_nvda_change, rf'\g<1>{nvda_change_color}\g<2>{nvda_data["change_only"]} <span class="text-slate-500 font-normal ml-1">(상승)</span>\g<3>', content, flags=re.DOTALL)
+        pattern_nvda_change = r'(<div class="(?:text-sky-400|text-slate-500) text-xs font-bold mb-2 uppercase">NVIDIA \(NVDA\)</div>\s*<div class="text-3xl font-black metric-value mb-1">[^<]+</div>\s*<div class=")(?:text-emerald-400|text-red-400)( text-sm font-bold">).*?(</div>)'
+        content = re.sub(pattern_nvda_change, rf'\g<1>{nvda_change_color}\g<2>{nvda_data["change_only"]} <span class="text-slate-500 font-normal ml-1">({"상승" if "+" in nvda_data["change_only"] else "하락"})</span>\g<3>', content, flags=re.DOTALL)
 
         content = update_ai_action_guide(content, nvda_data['price_str'])
         
