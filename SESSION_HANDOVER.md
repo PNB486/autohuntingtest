@@ -1,18 +1,19 @@
-# 🏁 Session Handover (KST: 2026-07-08 17:34)
+# 🏁 Session Handover (KST: 2026-07-09 11:07)
 
 ## 📝 Summary of Accomplishments
-- **실시간 지수, 환율 및 개별 종목 데이터 전체 갱신 완료 (장후 최종 마감)**: 2026년 7월 8일 17:34 KST 기준의 코스피 최종 마감 지수, 나스닥, USD/KRW 실시간 환율 및 개별 종목 주가를 포털 내 모든 HTML 파일에 성공적으로 반영하였습니다.
-- **고환율 매크로 리스크 할인율 반영**: USD/KRW 환율이 1,509.57원으로 1,450원 임계치를 상회함에 따라 "High Currency Risk Zone" 분류를 유지하고 평가 가치에 15%의 리스크 할인율을 적용하여 모든 밸류에이션 리포트를 최신화하였습니다.
-- **실시간 뉴스 및 지수 자동 반영**: `node scripts/fetch_news.cjs` 스크립트를 통해 장후 최종 뉴스를 수집하고 `news.html`을 갱신하였으며, 국내/외 증시 및 세부 종목 밸류에이션 리포트의 지수 카드를 자동 반영하였습니다.
-- **웹 리포트 및 인코딩 무결성 검증 통과**: `python scripts/revalidate_portal.py` 검증 스크립트를 통해 HTML 파일 모두 UTF-8 (No BOM) 인코딩, Chart.js 컨테이너 규격 및 태그 무결성 오류가 없음을 확인했습니다.
-- **KOSPI 투자자 수급 동향 동기화**: 개인 -355억, 외국인 +3,361억, 기관 -3,479억의 최종 장후 수급 트렌드를 `kospi.html` 및 Chart.js 데이터셋에 동기화하였습니다. (네이버 금융 사이트 `https://finance.naver.com/sise/sise_trans_style.nhn`를 통해 크로스체크 및 검증 완료)
+- **바탕화면 단축 실행 배치 파일 생성**: 바탕화면(`C:\Users\S\Desktop\agy_skip_perms.bat`)에 권한 확인 절차를 생략하고 바로 실행 가능한 배치 파일 (`agy --dangerously-skip-permissions`)을 생성하였습니다.
+- **KOSPI 장중 고가/저가 로직 오류 진단 및 수정**: `auto_update_market_data.py`가 KOSPI 장중 고가/저가를 추출할 때 5일간의 주별 전체 변동 범위(`kospi_hist_data`)에서 가져오던 로직을 금일 장중 실시간 지표인 `kospi_data`를 참조하도록 수정하였습니다.
+- **KOSPI 지수 데이터 소스 전환**: Naver 모바일 인덱스 API의 가격 왜곡 및 지연 문제를 해결하기 위해, KOSPI 지수(`^KS11`) 및 지수 히스토리 데이터를 글로벌 실시간 API인 Yahoo Finance 데이터 소스로 대체하여 정확한 장중 저가(`7,410.06`) 및 고가(`7,543.86`)가 포털에 반영되도록 조치했습니다.
+- **실시간 포털 자동 업데이트 완료 (수정 반영)**: `stock-market-hunter` 서브에이전트를 호출하여 KOSPI 현재 지수 `7,447.89` 및 수정된 저가/고가 범위가 웹 포털에 오류 없이 갱신됨을 확인하였습니다.
+- **고환율 매크로 리스크 할인율 지속 적용**: USD/KRW 환율이 여전히 1,450원 임계치를 상회함에 따라 포털 내 모든 밸류에이션 리포트에 "High Currency Risk Zone" 분류 및 15%의 가치 할인율을 일관되게 적용하여 갱신했습니다.
+- **웹 리포트 무결성 검증 통과 및 원격 동기화**: `revalidate_portal.py` 검증 결과 10개 HTML 파일 모두 UTF-8 (No BOM) 인코딩 및 Chart.js 규격을 충족하였으며, GitHub 원격 저장소(`main` 브랜치)에 강제 푸시하여 커밋 해시(`ea8c0349fec307d7c532daf7a0a99b528190161a`)를 완전히 동기화하였습니다.
 
 ## 💻 CLI Session & Shell Environment
-- **Active Shell Code Code page**: `65001 (UTF-8)`
+- **Active Shell Code Page**: `65001 (UTF-8)`
 - **Recent Commands Executed**:
   ```powershell
   # 1. 원격 리포지토리 정렬 및 업데이트 실행
-  chcp 65001; git fetch origin main; git reset --hard origin/main
+  git fetch origin main; git reset --hard origin/main
   node scripts/fetch_news.cjs
   python scripts/auto_update_market_data.py
   python scripts/revalidate_portal.py
@@ -21,22 +22,22 @@
   git add .
   git commit --amend -m "Auto Hunt Portal Update"
   git push origin main --force
-  
-  # 3. Git 원격 동기화 검증
-  git fetch origin main; git rev-parse HEAD; git rev-parse origin/main
   ```
 - **Environment/Tools Status**: Python 3.10+, Node.js 20+, Git CLI.
 - **Active Background Tasks**: None.
 
 ## 📂 Workspace & Git Status
 - **Current Branch**: `main`
-- **Last Commit**: Auto Hunt Portal Update
-- **Uncommitted Changes**: None (pending commit/push).
+- **Last Commit**: `ea8c0349fec307d7c532daf7a0a99b528190161a` - `Auto Hunt Portal Update`
+- **Uncommitted Changes**: `None` (pending commit/push of SESSION_HANDOVER.md)
+- **Remote Sync Status**: `Synced`
 
 ## 🧠 Memory & Guidelines Updates
-- **고환율 리스크 할인율**: USD/KRW > 1,450 condition 충족 시 "High Currency Risk Zone"으로 분류하고 10~15% 수준의 할인율을 모든 밸류에이션 리포트에 반영하는 룰을 준수하고 있습니다. 현 환율 1,509.57원 기준으로 15% 가치 할인이 적용되었습니다.
+- **고환율 리스크 할인율**: USD/KRW > 1,450 condition 충족 시 "High Currency Risk Zone"으로 분류하고 10~15% 수준의 할인율을 모든 밸류에이션 리포트에 반영하는 룰을 준수하고 있습니다.
 - **Soul's 브랜딩 및 포맷**: KOSPI 시장 리포트에서 "Soul's" 브랜딩이 적용된 타이틀 및 "주식 시장 현황 | [Date] [Current Time]" 포맷이 충실히 유지되고 있으며, 시총 상위 Top 5 표 또한 정확히 갱신됩니다.
+- **KOSPI 데이터 소스 신뢰성 (오류 예방)**: Naver 모바일 API는 장중 실시간 지표 왜곡(가격 지연 및 장중 최저가가 종가와 동일하게 굳어버리는 버그)이 발생할 수 있습니다. KOSPI 지수(`^KS11`) 및 히스토리(5일) 데이터를 가져올 때는 무조건 Yahoo Finance를 사용해야 합니다.
+- **장중 최저가/최고가 참조**: KOSPI의 장중 최저/최고값(`kospi_intraday_data`)은 주별 변동 범위(`kospi_hist_data`)가 아닌 실시간 당일 index 지표(`kospi_data`)에서 파싱해야 가격 왜곡이 재발하지 않습니다.
 
 ## ⏭️ Next Actions Checklist (이어서 할 일)
 - [ ] USD/KRW 환율 추이 모니터링 및 1,450원 임계치 상하회 여부에 따른 리스크 할인율 변동 추적.
-- [ ] 내일 장중 실시간 갱신을 위해 `0SoulAutoHunt.bat` 또는 스크립트 실행.
+- [ ] 장 마감 전후 실시간 갱신을 위해 `0SoulAutoHunt.bat` 또는 스크립트 실행.

@@ -39,40 +39,88 @@ def fetch_yahoo_chart(symbol, range_str="1d", interval="1m"):
     return None
 
 def fetch_naver_index(symbol):
-    url = f"https://m.stock.naver.com/api/index/{symbol}/basic"
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1'})
-    try:
-        with urllib.request.urlopen(req, timeout=10) as res:
-            data = json.loads(res.read().decode('utf-8'))
-            price = float(data['closePrice'].replace(',', ''))
-            diff = float(data['compareToPreviousClosePrice'].replace(',', ''))
-            pct = float(data['fluctuationsRatio'])
-            direction = data['compareToPreviousPrice']['name']
-            if direction == 'FALLING':
-                diff = -abs(diff)
-                pct = -abs(pct)
-            else:
-                diff = abs(diff)
-                pct = abs(pct)
-            prev_close = price - diff
-            
-            # Intraday points
-            open_p = float(data.get('openPrice', '0').replace(',', ''))
-            high_p = float(data.get('highPrice', '0').replace(',', ''))
-            low_p = float(data.get('lowPrice', '0').replace(',', ''))
-            
-            return {
-                'price': price,
-                'previous_close': prev_close,
-                'change_pct': pct,
-                'change_diff': diff,
-                'open': open_p,
-                'high': high_p,
-                'low': low_p
-            }
-    except Exception as e:
-        print(f"Failed to fetch Naver index {symbol}: {e}")
+    if symbol == "KOSPI":
+        symbol_yahoo = "^KS11"
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol_yahoo}?range=1d&interval=1m"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=10) as res:
+                    data = json.loads(res.read().decode('utf-8'))
+                    result = data['chart']['result'][0]
+                    meta = result['meta']
+                    price = meta.get('regularMarketPrice')
+                    prev_close = meta.get('chartPreviousClose')
+                    
+                    open_p = price
+                    high_p = price
+                    low_p = price
+                    
+                    if 'indicators' in result and 'quote' in result['indicators'] and len(result['indicators']['quote']) > 0:
+                        quotes = result['indicators']['quote'][0]
+                        closes = [c for c in quotes.get('close', []) if c is not None]
+                        highs = [h for h in quotes.get('high', []) if h is not None]
+                        lows = [l for l in quotes.get('low', []) if l is not None]
+                        opens = [o for o in quotes.get('open', []) if o is not None]
+                        
+                        if opens:
+                            open_p = opens[0]
+                        if highs:
+                            high_p = max(highs)
+                        if lows:
+                            low_p = min(lows)
+                    
+                    diff = price - prev_close
+                    pct = (diff / prev_close) * 100 if prev_close else 0.0
+                    
+                    return {
+                        'price': price,
+                        'previous_close': prev_close,
+                        'change_pct': pct,
+                        'change_diff': diff,
+                        'open': open_p,
+                        'high': high_p,
+                        'low': low_p
+                    }
+            except Exception as e:
+                print(f"Attempt {attempt+1} failed to fetch KOSPI from Yahoo: {e}")
+                time.sleep(1)
         return None
+    else:
+        url = f"https://m.stock.naver.com/api/index/{symbol}/basic"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1'})
+        try:
+            with urllib.request.urlopen(req, timeout=10) as res:
+                data = json.loads(res.read().decode('utf-8'))
+                price = float(data['closePrice'].replace(',', ''))
+                diff = float(data['compareToPreviousClosePrice'].replace(',', ''))
+                pct = float(data['fluctuationsRatio'])
+                direction = data['compareToPreviousPrice']['name']
+                if direction == 'FALLING':
+                    diff = -abs(diff)
+                    pct = -abs(pct)
+                else:
+                    diff = abs(diff)
+                    pct = abs(pct)
+                prev_close = price - diff
+                
+                # Intraday points
+                open_p = float(data.get('openPrice', '0').replace(',', '')) if data.get('openPrice') is not None else price
+                high_p = float(data.get('highPrice', '0').replace(',', '')) if data.get('highPrice') is not None else price
+                low_p = float(data.get('lowPrice', '0').replace(',', '')) if data.get('lowPrice') is not None else price
+                
+                return {
+                    'price': price,
+                    'previous_close': prev_close,
+                    'change_pct': pct,
+                    'change_diff': diff,
+                    'open': open_p,
+                    'high': high_p,
+                    'low': low_p
+                }
+        except Exception as e:
+            print(f"Failed to fetch Naver index {symbol}: {e}")
+            return None
 
 def fetch_naver_stock(symbol):
     url = f"https://m.stock.naver.com/api/stock/{symbol}/basic"
@@ -102,34 +150,74 @@ def fetch_naver_stock(symbol):
         return None
 
 def fetch_naver_index_history(symbol, page_size=5):
-    url = f"https://m.stock.naver.com/api/index/{symbol}/price?pageSize={page_size}&page=1"
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1'})
-    try:
-        with urllib.request.urlopen(req, timeout=10) as res:
-            data = json.loads(res.read().decode('utf-8'))
-            history = []
-            dates = []
-            for item in reversed(data):
-                history.append(float(item['closePrice'].replace(',', '')))
-                dt = datetime.datetime.strptime(item['localTradedAt'], '%Y-%m-%d')
-                dates.append(dt.strftime('%a'))
-                
-            # Today's intraday details from the newest item (index 0)
-            today_item = data[0]
-            open_p = float(today_item['openPrice'].replace(',', ''))
-            high_p = float(today_item['highPrice'].replace(',', ''))
-            low_p = float(today_item['lowPrice'].replace(',', ''))
-            
-            return {
-                'history': history,
-                'labels': dates,
-                'open': open_p,
-                'high': high_p,
-                'low': low_p
-            }
-    except Exception as e:
-        print(f"Failed to fetch Naver history for {symbol}: {e}")
+    if symbol == "KOSPI":
+        url = "https://query1.finance.yahoo.com/v8/finance/chart/^KS11?range=5d&interval=1d"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=10) as res:
+                    data = json.loads(res.read().decode('utf-8'))
+                    result = data['chart']['result'][0]
+                    meta = result['meta']
+                    
+                    close_prices = []
+                    timestamps = []
+                    if 'indicators' in result and 'quote' in result['indicators'] and len(result['indicators']['quote']) > 0:
+                        quotes = result['indicators']['quote'][0]
+                        raw_closes = quotes.get('close', [])
+                        raw_timestamps = result.get('timestamp', [])
+                        for i in range(min(len(raw_closes), len(raw_timestamps))):
+                            if raw_closes[i] is not None:
+                                close_prices.append(raw_closes[i])
+                                timestamps.append(raw_timestamps[i])
+                    
+                    history = [round(p, 2) for p in close_prices[-page_size:]]
+                    labels = []
+                    for ts in timestamps[-len(history):]:
+                        dt = datetime.datetime.utcfromtimestamp(ts)
+                        kst_dt = dt + datetime.timedelta(hours=9)
+                        labels.append(kst_dt.strftime('%a'))
+                        
+                    return {
+                        'history': history,
+                        'labels': labels,
+                        'open': meta.get('regularMarketOpen') or (history[0] if history else 0.0),
+                        'high': meta.get('regularMarketHigh') or (max(history) if history else 0.0),
+                        'low': meta.get('regularMarketLow') or (min(history) if history else 0.0)
+                    }
+            except Exception as e:
+                print(f"Attempt {attempt+1} failed to fetch KOSPI history from Yahoo: {e}")
+                time.sleep(1)
         return None
+    else:
+        url = f"https://m.stock.naver.com/api/index/{symbol}/price?pageSize={page_size}&page=1"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1'})
+        try:
+            with urllib.request.urlopen(req, timeout=10) as res:
+                data = json.loads(res.read().decode('utf-8'))
+                history = []
+                dates = []
+                for item in reversed(data):
+                    history.append(float(item['closePrice'].replace(',', '')))
+                    dt = datetime.datetime.strptime(item['localTradedAt'], '%Y-%m-%d')
+                    dates.append(dt.strftime('%a'))
+                    
+                # Today's intraday details from the newest item (index 0)
+                today_item = data[0]
+                open_p = float(today_item['openPrice'].replace(',', ''))
+                high_p = float(today_item['highPrice'].replace(',', ''))
+                low_p = float(today_item['lowPrice'].replace(',', ''))
+                
+                return {
+                    'history': history,
+                    'labels': dates,
+                    'open': open_p,
+                    'high': high_p,
+                    'low': low_p
+                }
+        except Exception as e:
+            print(f"Failed to fetch Naver history for {symbol}: {e}")
+            return None
 
 def fetch_naver_kospi_trend():
     url = "https://m.stock.naver.com/api/index/KOSPI/trend"
@@ -227,9 +315,9 @@ def main():
         
     # Today's KOSPI intraday data points based on Open, Low, High, Current
     kospi_intraday_data = [
-        round(kospi_hist_data['open'], 2) if kospi_hist_data else round(kospi_data['price'], 2),
-        round(kospi_hist_data['low'], 2) if kospi_hist_data else round(kospi_data['price'], 2),
-        round(kospi_hist_data['high'], 2) if kospi_hist_data else round(kospi_data['price'], 2),
+        round(kospi_data['open'], 2) if kospi_data else round(kospi_data['price'], 2),
+        round(kospi_data['low'], 2) if kospi_data else round(kospi_data['price'], 2),
+        round(kospi_data['high'], 2) if kospi_data else round(kospi_data['price'], 2),
         round(kospi_data['price'], 2)
     ]
         
