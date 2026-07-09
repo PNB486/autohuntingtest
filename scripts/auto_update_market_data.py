@@ -712,9 +712,9 @@ def main():
         
         samsung_color = "text-rose-500" if "+" in dom_prices['삼성전자 (005930)']['change_only'] else "text-blue-400"
         hynix_color = "text-rose-500" if "+" in dom_prices['SK하이닉스 (000660)']['change_only'] else "text-blue-400"
-        pattern_samsung_change = r'(삼성전자</h2>.*?<div class="text-right">.*?</div>\s*<div class=")(?:text-rose-500|text-blue-400|text-slate-400)(" text-sm font-semibold">)[^<]+(</div>)'
+        pattern_samsung_change = r'(삼성전자</h2>.*?<div class="text-right">.*?</div>\s*<div class=")(?:text-rose-500|text-blue-400|text-slate-400)( text-sm font-semibold">)[^<]+(</div>)'
         content = re.sub(pattern_samsung_change, rf'\g<1>{samsung_color}\g<2>{dom_prices["삼성전자 (005930)"]["change_desc_simple"]}\g<3>', content, flags=re.DOTALL)
-        pattern_hynix_change = r'(SK하이닉스</h2>.*?<div class="text-right">.*?</div>\s*<div class=")(?:text-rose-500|text-blue-400|text-slate-400)(" text-sm font-semibold">)[^<]+(</div>)'
+        pattern_hynix_change = r'(SK하이닉스</h2>.*?<div class="text-right">.*?</div>\s*<div class=")(?:text-rose-500|text-blue-400|text-slate-400)( text-sm font-semibold">)[^<]+(</div>)'
         content = re.sub(pattern_hynix_change, rf'\g<1>{hynix_color}\g<2>{dom_prices["SK하이닉스 (000660)"]["change_desc_simple"]}\g<3>', content, flags=re.DOTALL)
 
         content = re.sub(r'const\s+samsungCurrentPrice\s*=\s*\d+;', f"const samsungCurrentPrice = {dom_prices['삼성전자 (005930)']['price']};", content)
