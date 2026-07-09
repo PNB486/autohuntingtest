@@ -1,12 +1,12 @@
-# 🏁 Session Handover (KST: 2026-07-09 11:07)
+# 🏁 Session Handover (KST: 2026-07-09 15:25)
 
 ## 📝 Summary of Accomplishments
 - **바탕화면 단축 실행 배치 파일 생성**: 바탕화면(`C:\Users\S\Desktop\agy_skip_perms.bat`)에 권한 확인 절차를 생략하고 바로 실행 가능한 배치 파일 (`agy --dangerously-skip-permissions`)을 생성하였습니다.
 - **KOSPI 장중 고가/저가 로직 오류 진단 및 수정**: `auto_update_market_data.py`가 KOSPI 장중 고가/저가를 추출할 때 5일간의 주별 전체 변동 범위(`kospi_hist_data`)에서 가져오던 로직을 금일 장중 실시간 지표인 `kospi_data`를 참조하도록 수정하였습니다.
-- **KOSPI 지수 데이터 소스 전환**: Naver 모바일 인덱스 API의 가격 왜곡 및 지연 문제를 해결하기 위해, KOSPI 지수(`^KS11`) 및 지수 히스토리 데이터를 글로벌 실시간 API인 Yahoo Finance 데이터 소스로 대체하여 정확한 장중 저가(`7,410.06`) 및 고가(`7,543.86`)가 포털에 반영되도록 조치했습니다.
-- **실시간 포털 자동 업데이트 완료 (수정 반영)**: `stock-market-hunter` 서브에이전트를 호출하여 KOSPI 현재 지수 `7,447.89` 및 수정된 저가/고가 범위가 웹 포털에 오류 없이 갱신됨을 확인하였습니다.
-- **고환율 매크로 리스크 할인율 지속 적용**: USD/KRW 환율이 여전히 1,450원 임계치를 상회함에 따라 포털 내 모든 밸류에이션 리포트에 "High Currency Risk Zone" 분류 및 15%의 가치 할인율을 일관되게 적용하여 갱신했습니다.
-- **웹 리포트 무결성 검증 통과 및 원격 동기화**: `revalidate_portal.py` 검증 결과 10개 HTML 파일 모두 UTF-8 (No BOM) 인코딩 및 Chart.js 규격을 충족하였으며, GitHub 원격 저장소(`main` 브랜치)에 강제 푸시하여 커밋 해시(`ea8c0349fec307d7c532daf7a0a99b528190161a`)를 완전히 동기화하였습니다.
+- **KOSPI 지수 데이터 소스 전환**: Naver 모바일 인덱스 API의 가격 왜곡 및 지연 문제를 해결하기 위해, KOSPI 지수(`^KS11`) 및 지수 히스토리 데이터를 글로벌 실시간 API인 Yahoo Finance 데이터 소스로 대체하여 정확한 장중 저가(`7,063.76`) 및 고가(`7,543.86`)가 포털에 반영되도록 조치했습니다.
+- **실시간 포털 자동 업데이트 완료 (장 마감 최종 갱신)**: `stock-market-hunter` 서브에이전트를 호출하여 KOSPI 장 마감 지수 `7,282.04` 및 최종 수급 현황(외인 +3,354억, 기관 +14,236억, 개인 -16,555억)을 포털에 완벽히 반영하였습니다.
+- **고환율 매크로 리스크 할인율 지속 적용**: USD/KRW 환율이 1,505.38원으로 여전히 1,450원 임계치를 상회함에 따라 포털 내 모든 밸류에이션 리포트에 "High Currency Risk Zone" 분류 및 15%의 가치 할인율을 일관되게 적용하여 갱신했습니다.
+- **웹 리포트 무결성 검증 통과 및 원격 동기화**: `revalidate_portal.py` 검증 결과 10개 HTML 파일 모두 UTF-8 (No BOM) 인코딩 및 Chart.js 규격을 충족하였으며, GitHub 원격 저장소(`main` 브랜치)에 강제 푸시하여 커밋 해시(`7bbb1a753bf4cf7f8f611799de486ed987faa53d`)를 완전히 동기화하였습니다.
 
 ## 💻 CLI Session & Shell Environment
 - **Active Shell Code Page**: `65001 (UTF-8)`
@@ -28,7 +28,7 @@
 
 ## 📂 Workspace & Git Status
 - **Current Branch**: `main`
-- **Last Commit**: `ea8c0349fec307d7c532daf7a0a99b528190161a` - `Auto Hunt Portal Update`
+- **Last Commit**: `7bbb1a753bf4cf7f8f611799de486ed987faa53d` - `Auto Hunt Portal Update`
 - **Uncommitted Changes**: `None` (pending commit/push of SESSION_HANDOVER.md)
 - **Remote Sync Status**: `Synced`
 
@@ -40,4 +40,4 @@
 
 ## ⏭️ Next Actions Checklist (이어서 할 일)
 - [ ] USD/KRW 환율 추이 모니터링 및 1,450원 임계치 상하회 여부에 따른 리스크 할인율 변동 추적.
-- [ ] 장 마감 전후 실시간 갱신을 위해 `0SoulAutoHunt.bat` 또는 스크립트 실행.
+- [ ] 내일 장중 실시간 갱신을 위해 `0SoulAutoHunt.bat` 또는 스크립트 실행.
