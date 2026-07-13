@@ -124,7 +124,7 @@ async function run() {
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         body { background-color: #020617; color: #f1f5f9; font-family: 'Pretendard', sans-serif; }
-        .card { background-color: #1e293b; border: 1px solid #334155; transition: transform 0.2s ease; cursor: pointer; }
+        .card { background-color: #0f172a; border: 1px solid #1e293b; transition: transform 0.2s ease; cursor: pointer; }
         .card:hover { transform: scale(1.02); }
         .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-link { transition: color 0.2s; }
