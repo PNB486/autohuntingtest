@@ -1,52 +1,54 @@
-# 🏁 Session Handover (KST: 2026-07-13 17:03)
+# 🏁 Session Handover (KST: 2026-07-14 12:02)
 
 ## 📝 Summary of Accomplishments
-- **실시간 포털 17:00 KST (장 마감) 최종 자동 업데이트 완료**:
-  - **KOSPI 지수**: 6,806.93 (▼ 669.01, -8.95%)로 기록적인 대폭락 마감 (서킷브레이커 및 사이드카 발동).
-  - **NASDAQ 지수**: 26,281.61 (▲ 74.72, +0.29%) 현지시간 전일 종가 반영.
-  - **원/달러 환율**: 1,503.40원으로 1,450원 임계치를 상회하며 장을 마쳐 "High Currency Risk Zone" 상태 유지 및 15% 가치 할인율 지속 적용.
-  - **국내 및 해외 주요 종목 최종 마감 시세 반영**:
-    - 삼성전자: 254,500원 (▼ 30,500, -10.70%)
-    - SK하이닉스: 1,845,000원 (▼ 335,000, -15.37%)
-    - LG에너지솔루션: 328,500원 (▼ 37,500, -10.25% - 마감 전동 반영 완료)
-    - NVIDIA: $210.96 (▲ $8.18, +4.03%)
-  - **투자자별 매매동향**: 개인 +38,822억 순매수 | 외국인 -16,916억 순매도 | 기관 -22,194억 순매도.
-  - **뉴스 및 HTML 데이터 갱신**: `fetch_news.cjs`와 `auto_update_market_data.py` 구동을 완료하여 [news.html](file:///C:/Users/S/Desktop/AI/Gemini/Stock/news.html) 및 모든 밸류에이션 리포트를 최신화했습니다.
-- **포털 무결성 검증 및 원격 동기화**:
-  - `revalidate_portal.py`를 실행하여 10개 HTML 파일의 UTF-8 (No BOM) 인코딩, Chart.js 컨테이너 규격 및 옵션 검증을 완료하였습니다.
-  - Git 원격 저장소(`main` 브랜치)에 최종 아맨드 커밋 및 강제 푸시를 성공적으로 완료하여 동기화를 마쳤습니다. (커밋 해시: `e15220b9c2991e48b3ea6ccb6e6e90cb82342b74`)
+- **스케줄러 자동화 구축 및 실행**:
+  - `9:15 AM` 및 `12:00 PM` (월~금, KST)에 실행될 자동화 크론 스케줄링 태스크(`task-22`, `task-24`) 등록 완료.
+  - **9:15 AM 장 초반 자동 업데이트 완료**:
+    - KOSPI: `6,806.93` (▼ -8.95% / -669.01 pts)
+    - NASDAQ: `25,873.18` (▼ -1.55% / -408.43 pts)
+    - USD/KRW: `1,497.18` (High Currency Risk Zone, 15% 가치 할인율 적용)
+    - 투자자 수급: 개인 -9,801억 | 외국인 +709억 | 기관 +9,074억
+  - **12:00 PM 장중 자동 업데이트 완료**:
+    - KOSPI: `6,679.95` (▼ -1.87% / -126.98 pts, 추가 하락세 지속)
+    - NASDAQ: `25,873.18` (▼ -1.55% / -408.43 pts, 전일 종가 유지)
+    - USD/KRW: `1,490.78` (High Currency Risk Zone, 15% 가치 할인율 적용)
+    - 투자자 수급: 개인 -25,998억 | 외국인 +3,518억 | 기관 +22,728억 (기관/외인 순매수세 강화, 개인 매도세 전환)
+- **포털 무결성 및 인코딩 검증 완료**:
+  - `revalidate_portal.py`를 실행하여 UTF-8 (No BOM) 검증 및 Chart.js 반응형 컨테이너 규격을 완벽히 통과하였습니다.
+- **Git 원격 동기화 검증**:
+  - 최종 원격 커밋 해시: `1a45fcd6ef3298ef5b31a965e7b9ea9bd36eac4e` (Local/Remote 일치 완료).
 
 ## 💻 CLI Session & Shell Environment
 - **Active Shell Code Page**: `65001 (UTF-8)`
 - **Recent Commands Executed**:
   ```powershell
-  # 1. 뉴스 데이터 가져오기 실행
+  # 1. 크론 태스크 스케줄링 (스케줄러 툴 사용)
+  # - task-22 (9:15 AM KST)
+  # - task-24 (12:00 PM KST)
+  
+  # 2. subagent 구동을 통한 자동 헌팅 업데이트
   node scripts/fetch_news.cjs
-  
-  # 2. 포털 데이터 자동 갱신 (17:00 KST 장 마감가 반영)
   python scripts/auto_update_market_data.py
-  
-  # 3. 포털 무결성 및 인코딩 검증
   python scripts/revalidate_portal.py
-  
-  # 4. Git Staging, 커밋 아맨드 및 강제 푸시 동기화
   git add .
   git commit --amend -m "Auto Hunt Portal Update"
   git push origin main --force
   ```
 - **Environment/Tools Status**: Python 3.10+, Node.js 20+, Git CLI.
-- **Active Background Tasks**: None (cron job task-62 has completed all 3 iterations).
+- **Active Background Tasks**:
+  - `task-22` (Cron: `15 9 * * 1-5`, 9:15 AM KST 데일리 업데이트 크론)
+  - `task-24` (Cron: `0 12 * * 1-5`, 12:00 PM KST 데일리 업데이트 크론)
 
 ## 📂 Workspace & Git Status
 - **Current Branch**: `main`
-- **Last Commit**: `e15220b9c2991e48b3ea6ccb6e6e90cb82342b74` - `Auto Hunt Portal Update`
+- **Last Commit**: `1a45fcd6ef3298ef5b31a965e7b9ea9bd36eac4e` - `Auto Hunt Portal Update`
 - **Uncommitted Changes**: None (working tree clean)
 - **Remote Sync Status**: `Synced`
 
 ## 🧠 Memory & Guidelines Updates
-- **고환율 리스크 할인율**: USD/KRW > 1,450원일 때 "High Currency Risk Zone"으로 분류하고 15% 수준의 할인율을 모든 밸류에이션 리포트에 반영하는 룰을 준수합니다.
-- **역대급 시장 붕괴 마감**: 7월 13일 월요일 KOSPI는 -8.95% 폭락하며 역사적인 하락세를 기록했습니다. 개인의 기록적인 순매수(+3.8조)에도 불구하고 외인/기관의 무차별 매도 폭탄으로 전 종목이 패닉 셀링을 겪었습니다.
+- **고환율 리스크 할인율**: USD/KRW가 1,450원을 지속 상회(현재 1,490.78원)함에 따라 모든 밸류에이션 리포트(`valuation_semi.html` 등)에 **15% 가치 할인율**이 유지 적용 중입니다.
+- **스케줄러 유지**: 백그라운드 크론 스케줄러(`task-22`, `task-24`)가 떠 있으므로 다음 세션에서도 지정된 시간에 맞추어 자동으로 업데이트 헌팅 프로세스가 트리거됩니다.
 
 ## ⏭️ Next Actions Checklist (이어서 할 일)
-- [ ] 오늘 밤 미 증시(NASDAQ) 개장 후 장중 추이 모니터링 및 내일 아침 개장 전 업데이트 준비.
-- [ ] 지정학적 리스크 관련 야간 속보 및 외신 뉴스 모니터링.
+- [ ] 오늘 오후 장 마감(15:30 KST) 또는 미 증시 야간 개장 전 추가 수동/자동 업데이트 대응 준비.
+- [ ] 백그라운드 크론 작업 모니터링 유지 및 에러 발생 시 원타임 리트라이 규칙 준수.
