@@ -20,9 +20,14 @@
         <!-- 2-tier navigation -->
         <nav class="mb-8">
             <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
-                <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
-                <div class="flex gap-6 text-sm font-medium text-slate-400">
-                    <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="sm:hidden text-sky-400 hover:text-sky-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </a>
+                    <div class="font-bold text-lg gradient-text cursor-pointer hidden sm:block" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+                </div>
+                <div class="flex gap-4 sm:gap-6 text-sm font-medium text-slate-400">
+                    <a href="index.html" class="hover:text-sky-400 transition-colors hidden sm:block">🏠</a>
                     <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
                     <a href="kospi.html" class="hover:text-sky-400 transition-colors">국내증시</a>
                     <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
@@ -40,11 +45,11 @@
         <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
             <div>
                 <h1 class="text-4xl font-extrabold mb-2 gradient-text">반도체주 자동사냥</h1>
-                <p class="text-slate-400">주요 종목 적정가 및 리스크 진단 | 2026. 07. 15. 15:00</p>
+                <p class="text-slate-400">주요 종목 적정가 및 리스크 진단 | 2026. 07. 16. 12:13</p>
             </div>
             <div class="risk-badge px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2" id="headerRiskBadge">
                 <span id="headerRiskLabel">⚠️ High Currency Risk Zone</span>
-                <span class="bg-red-500 text-white px-2 py-0.5 rounded" id="headerRiskVal">1,486.08</span>
+                <span class="bg-red-500 text-white px-2 py-0.5 rounded" id="headerRiskVal">1,484.15</span>
             </div>
         </header>
 
@@ -60,9 +65,9 @@
                 <div class="space-y-2">
                     <div class="flex justify-between items-center text-sm font-semibold">
                         <span class="text-slate-300">원/달러 환율 (USD/KRW)</span>
-                        <span class="text-sky-400 font-mono" id="exchangeRateVal">1,486.08 KRW</span>
+                        <span class="text-sky-400 font-mono" id="exchangeRateVal">1,484.15 KRW</span>
                     </div>
-                    <input type="range" id="exchangeRateSlider" min="1300" max="1700" step="1" value="1486" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+                    <input type="range" id="exchangeRateSlider" min="1300" max="1700" step="1" value="1484" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
                     <div class="flex justify-between text-[10px] text-slate-500 font-mono">
                         <span>1,300</span>
                         <span>1,450 (위험 임계값)</span>
@@ -98,8 +103,8 @@
                         <span class="text-slate-500 text-sm">005930.KS</span>
                     </div>
                     <div class="text-right">
-                        <div class="text-3xl font-bold text-sky-400">280,500 <span class="text-sm">KRW</span></div>
-                        <div class="text-rose-500 text-sm font-semibold">▲ 17,500 (+6.65%)</div>
+                        <div class="text-3xl font-bold text-sky-400">258,000 <span class="text-sm">KRW</span></div>
+                        <div class="text-blue-400 text-sm font-semibold">▼ 21,500 (-7.69%)</div>
                     </div>
                 </div>
                 
@@ -139,8 +144,8 @@
                         <span class="text-slate-500 text-sm">000660.KS</span>
                     </div>
                     <div class="text-right">
-                        <div class="text-3xl font-bold text-sky-400">2,111,000 <span class="text-sm">KRW</span></div>
-                        <div class="text-rose-500 text-sm font-semibold">▲ 198,000 (+10.35%)</div>
+                        <div class="text-3xl font-bold text-sky-400">1,872,000 <span class="text-sm">KRW</span></div>
+                        <div class="text-blue-400 text-sm font-semibold">▼ 210,000 (-10.09%)</div>
                     </div>
                 </div>
                 
@@ -189,7 +194,7 @@
             <div class="card-bg p-6 rounded-3xl border-l-4 border-rose-500">
                 <h4 class="text-rose-400 font-bold mb-3">[리스크 요인]</h4>
                 <p class="text-slate-400 text-sm leading-relaxed">
-                    원/달러 환율이 <strong>1,486.08원 (High Currency Risk Zone)</strong>에 도달함에 따라 외인 수급 이탈과 원자재 부품 수입 단가 상승에 따른 수익성 악화 압박이 심각합니다. 이에 대응하여 모든 목표주가 밸류에이션에 15% 매크로 할인을 보수적으로 강제 반영했습니다.
+                    원/달러 환율이 <strong>1,484.15원 (High Currency Risk Zone)</strong>에 도달함에 따라 외인 수급 이탈과 원자재 부품 수입 단가 상승에 따른 수익성 악화 압박이 심각합니다. 이에 대응하여 모든 목표주가 밸류에이션에 15% 매크로 할인을 보수적으로 강제 반영했습니다.
                 </p>
             </div>
         </div>
@@ -226,7 +231,7 @@
 
         <footer class="text-center text-slate-500 text-sm py-10 border-t border-slate-800">
             © 2026 Soul's Insight. All rights reserved. Data verified via Research.<br>
-            Last Updated: 2026. 07. 15. 15:00 KST
+            Last Updated: 2026. 07. 16. 12:13 KST
         </footer>
     </div>
 
@@ -296,9 +301,9 @@
             const headerRiskVal = document.getElementById('headerRiskVal');
             
             const samsungBaseTarget = 570000;
-            const samsungCurrentPrice = 280500;
+            const samsungCurrentPrice = 258000;
             const hynixBaseTarget = 2500000;
-            const hynixCurrentPrice = 2111000;
+            const hynixCurrentPrice = 1872000;
             
             // Baseline profits data
             const samsungBaseProfits = [12.4, 14.1, 15.2, 19.5, 25.1];

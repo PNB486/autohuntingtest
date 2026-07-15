@@ -236,6 +236,39 @@ def fetch_naver_kospi_trend():
             time.sleep(1)
     return {'personal': '0', 'foreign': '0', 'institutional': '0'}
 
+def fetch_stock_trend(code):
+    url = f"https://m.stock.naver.com/api/stock/{code}/trend?pageSize=5"
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15'})
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=10) as res:
+                return json.loads(res.read().decode('utf-8'))
+        except Exception as e:
+            print(f"Attempt {attempt+1} failed to fetch trend for {code}: {e}")
+            time.sleep(1)
+    return []
+
+def get_cumulative_trend(data):
+    foreign = 0
+    personal = 0
+    institutional = 0
+    for row in data[:5]:
+        try:
+            foreign += int(row['foreignerPureBuyQuant'].replace(',', ''))
+            personal += int(row['individualPureBuyQuant'].replace(',', ''))
+            institutional += int(row['organPureBuyQuant'].replace(',', ''))
+        except Exception as e:
+            print(f"Error parsing row in cumulative calculation: {e}")
+    
+    def fmt(val):
+        return f"{val:+,}"
+    
+    return {
+        'foreign': fmt(foreign),
+        'personal': fmt(personal),
+        'institutional': fmt(institutional)
+    }
+
 def format_change_desc(price, prev_close, is_us=False, is_percent_only=False):
     diff = price - prev_close
     pct = (diff / prev_close) * 100 if prev_close else 0.0
@@ -406,6 +439,15 @@ def main():
     print("Fetching KOSPI investor trends...")
     inv_trend = fetch_naver_kospi_trend()
     print(f"  Investor Trend: Retail: {inv_trend['personal']}, Foreign: {inv_trend['foreign']}, Institution: {inv_trend['institutional']}")
+    
+    # Fetch Semiconductor (Samsung & SK Hynix) 5-day trends
+    print("Fetching Semiconductor (Samsung & SK Hynix) 5-day trends...")
+    samsung_data = fetch_stock_trend('005930')
+    hynix_data = fetch_stock_trend('000660')
+    samsung_cum_trend = get_cumulative_trend(samsung_data)
+    hynix_cum_trend = get_cumulative_trend(hynix_data)
+    print(f"  Samsung 5D: {samsung_cum_trend}")
+    print(f"  SK Hynix 5D: {hynix_cum_trend}")
     
     def parse_inv_val(v):
         try:
@@ -633,6 +675,28 @@ def main():
         content = re.sub(r'const\s+dailyLabels\s*=\s*\[[^\]]*\];', f"const dailyLabels = {kospi_labels};", content)
         content = re.sub(r'const\s+dailyData\s*=\s*\[[^\]]*\];', f"const dailyData = {kospi_history};", content)
         content = re.sub(r'data:\s*\[\s*-?\d+\s*,\s*-?\d+\s*,\s*-?\d+\s*\]', f"data: {inv_chart_data}", content)
+        
+        # Update Semiconductor (Samsung & SK Hynix) 5-day trends in kospi.html
+        def get_color_class(val_str):
+            return "rose-500" if "+" in val_str else "blue-400" if "-" in val_str else "slate-400"
+            
+        pattern_sam_p = r'(id="samsungPersonal" class="font-bold text-)(?:rose-500|blue-400|slate-400|emerald-400)(">)[^<]+(</span>)'
+        content = re.sub(pattern_sam_p, rf'\g<1>{get_color_class(samsung_cum_trend["personal"])}\g<2>{samsung_cum_trend["personal"]}\g<3>', content)
+        
+        pattern_sam_f = r'(id="samsungForeigner" class="font-bold text-)(?:rose-500|blue-400|slate-400|emerald-400)(">)[^<]+(</span>)'
+        content = re.sub(pattern_sam_f, rf'\g<1>{get_color_class(samsung_cum_trend["foreign"])}\g<2>{samsung_cum_trend["foreign"]}\g<3>', content)
+        
+        pattern_sam_i = r'(id="samsungInstitutional" class="font-bold text-)(?:rose-500|blue-400|slate-400|emerald-400)(">)[^<]+(</span>)'
+        content = re.sub(pattern_sam_i, rf'\g<1>{get_color_class(samsung_cum_trend["institutional"])}\g<2>{samsung_cum_trend["institutional"]}\g<3>', content)
+        
+        pattern_hyn_p = r'(id="hynixPersonal" class="font-bold text-)(?:rose-500|blue-400|slate-400|emerald-400)(">)[^<]+(</span>)'
+        content = re.sub(pattern_hyn_p, rf'\g<1>{get_color_class(hynix_cum_trend["personal"])}\g<2>{hynix_cum_trend["personal"]}\g<3>', content)
+        
+        pattern_hyn_f = r'(id="hynixForeigner" class="font-bold text-)(?:rose-500|blue-400|slate-400|emerald-400)(">)[^<]+(</span>)'
+        content = re.sub(pattern_hyn_f, rf'\g<1>{get_color_class(hynix_cum_trend["foreign"])}\g<2>{hynix_cum_trend["foreign"]}\g<3>', content)
+        
+        pattern_hyn_i = r'(id="hynixInstitutional" class="font-bold text-)(?:rose-500|blue-400|slate-400|emerald-400)(">)[^<]+(</span>)'
+        content = re.sub(pattern_hyn_i, rf'\g<1>{get_color_class(hynix_cum_trend["institutional"])}\g<2>{hynix_cum_trend["institutional"]}\g<3>', content)
         
         content = content.replace("1,513.40원", f"{rate_val_comma}원")
         content = content.replace("1,527.10원", f"{rate_val_comma}원")

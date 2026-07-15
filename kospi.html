@@ -17,9 +17,14 @@
         <!-- 2-tier navigation -->
         <nav class="mb-8">
             <div class="flex justify-between items-center px-4 py-3 bg-slate-800/50 rounded-t-2xl border border-slate-700">
-                <div class="font-bold text-lg gradient-text cursor-pointer" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
-                <div class="flex gap-6 text-sm font-medium text-slate-400">
-                    <a href="index.html" class="hover:text-sky-400 transition-colors">🏠</a>
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="sm:hidden text-sky-400 hover:text-sky-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </a>
+                    <div class="font-bold text-lg gradient-text cursor-pointer hidden sm:block" onclick="location.href='index.html'">Soul's 자동사냥포털</div>
+                </div>
+                <div class="flex gap-4 sm:gap-6 text-sm font-medium text-slate-400">
+                    <a href="index.html" class="hover:text-sky-400 transition-colors hidden sm:block">🏠</a>
                     <a href="news.html" class="hover:text-sky-400 transition-colors">뉴스사냥</a>
                     <a href="kospi.html" class="text-sky-400">국내증시</a>
                     <a href="nasdaq.html" class="hover:text-sky-400 transition-colors">해외증시</a>
@@ -36,7 +41,7 @@
 
         <header class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-2 gradient-text">국내증시 자동사냥</h1>
-            <p class="text-slate-400 text-lg">주식 시장 현황 | 2026. 07. 15. 15:00</p>
+            <p class="text-slate-400 text-lg">주식 시장 현황 | 2026. 07. 16. 12:13</p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
@@ -50,8 +55,8 @@
                     </div>
                 </div>
                 <div class="flex items-baseline gap-4 mb-6">
-                    <span class="text-5xl font-black text-sky-400">7,293.99</span>
-                    <span class="text-2xl font-bold text-rose-500">▲ 437.16 (+6.38%)</span>
+                    <span class="text-5xl font-black text-sky-400">6,861.76</span>
+                    <span class="text-2xl font-bold text-blue-400">▼ 422.65 (-5.80%)</span>
                 </div>
                 <div class="relative h-[300px]">
                     <canvas id="kospiChart"></canvas>
@@ -73,28 +78,28 @@
                         <tbody class="text-sm">
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">삼성전자 (005930)</td>
-                                <td class="py-4 text-right">280,500</td>
-                                <td class="py-4 text-right text-rose-500">+6.65%</td>
+                                <td class="py-4 text-right">258,000</td>
+                                <td class="py-4 text-right text-blue-400">-7.69%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">SK하이닉스 (000660)</td>
-                                <td class="py-4 text-right">2,111,000</td>
-                                <td class="py-4 text-right text-rose-500">+10.35%</td>
+                                <td class="py-4 text-right">1,872,000</td>
+                                <td class="py-4 text-right text-blue-400">-10.09%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">LG에너지솔루션 (373220)</td>
-                                <td class="py-4 text-right">338,000</td>
-                                <td class="py-4 text-right text-rose-500">+4.97%</td>
+                                <td class="py-4 text-right">337,000</td>
+                                <td class="py-4 text-right text-rose-500">+0.60%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">NAVER (035420)</td>
-                                <td class="py-4 text-right">191,000</td>
-                                <td class="py-4 text-right text-rose-500">+4.26%</td>
+                                <td class="py-4 text-right">188,600</td>
+                                <td class="py-4 text-right text-blue-400">-0.53%</td>
                             </tr>
                             <tr>
                                 <td class="py-4 font-bold">현대차 (005380)</td>
-                                <td class="py-4 text-right">435,500</td>
-                                <td class="py-4 text-right text-rose-500">+2.59%</td>
+                                <td class="py-4 text-right">419,500</td>
+                                <td class="py-4 text-right text-blue-400">-3.34%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -111,16 +116,63 @@
                     <div class="grid grid-cols-1 gap-2 text-xs">
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">외국인</span>
-                            <span class="text-rose-500 font-bold">+25,918억</span>
+                            <span class="text-blue-400 font-bold">-11,586억</span>
                         </div>
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">기관</span>
-                            <span class="text-rose-500 font-bold">+21억</span>
+                            <span class="text-blue-400 font-bold">-13,565억</span>
                         </div>
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">개인</span>
-                            <span class="text-blue-400 font-bold">-25,539억</span>
+                            <span class="text-rose-500 font-bold">+24,696억</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Semiconductor Investor Flow Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <!-- Samsung Electronics Investor Flow Card -->
+            <div class="card p-6 rounded-2xl shadow-xl">
+                <h3 class="text-slate-400 text-sm font-semibold uppercase mb-4 flex items-center gap-2">
+                    <span class="w-1.5 h-4 bg-sky-400 rounded-full"></span>
+                    삼성전자 (005930) 누적 수급 (5거래일, 단위: 주)
+                </h3>
+                <div class="grid grid-cols-3 gap-3 text-center text-xs">
+                    <div class="p-3 bg-slate-800/40 rounded-xl border border-slate-700/50">
+                        <span class="text-slate-500 block mb-1">개인</span>
+                        <span id="samsungPersonal" class="font-bold text-blue-400">-5,880,845</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/40 rounded-xl border border-slate-700/50">
+                        <span class="text-slate-500 block mb-1">외국인</span>
+                        <span id="samsungForeigner" class="font-bold text-rose-500">+1,425,611</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/40 rounded-xl border border-slate-700/50">
+                        <span class="text-slate-500 block mb-1">기관</span>
+                        <span id="samsungInstitutional" class="font-bold text-rose-500">+5,087,949</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SK Hynix Investor Flow Card -->
+            <div class="card p-6 rounded-2xl shadow-xl">
+                <h3 class="text-slate-400 text-sm font-semibold uppercase mb-4 flex items-center gap-2">
+                    <span class="w-1.5 h-4 bg-sky-400 rounded-full"></span>
+                    SK하이닉스 (000660) 누적 수급 (5거래일, 단위: 주)
+                </h3>
+                <div class="grid grid-cols-3 gap-3 text-center text-xs">
+                    <div class="p-3 bg-slate-800/40 rounded-xl border border-slate-700/50">
+                        <span class="text-slate-500 block mb-1">개인</span>
+                        <span id="hynixPersonal" class="font-bold text-blue-400">-129,146</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/40 rounded-xl border border-slate-700/50">
+                        <span class="text-slate-500 block mb-1">외국인</span>
+                        <span id="hynixForeigner" class="font-bold text-blue-400">-687,313</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/40 rounded-xl border border-slate-700/50">
+                        <span class="text-slate-500 block mb-1">기관</span>
+                        <span id="hynixInstitutional" class="font-bold text-rose-500">+790,431</span>
                     </div>
                 </div>
             </div>
@@ -160,10 +212,10 @@
                 
                 // Intraday and Daily Chart Data Variables (updated dynamically by python)
                 const intradayLabels = ['09:00 (시가)', '장중 최저', '장중 최고', '현재가'];
-                const intradayData = [7082.91, 7082.91, 7424.18, 7293.99];
+                const intradayData = [6960.5, 6730.87, 6995.93, 6861.76];
                 
-                const dailyLabels = ['Thu', 'Fri', 'Mon', 'Tue', 'Wed'];
-                const dailyData = [8545.98, 8726.6, 8864.24, 8203.84, 7293.99];
+                const dailyLabels = ['Fri', 'Mon', 'Tue', 'Wed', 'Thu'];
+                const dailyData = [7475.94, 6806.93, 6856.83, 7284.41, 6861.76];
                 
                 const chart = new Chart(ctx, {
                     type: 'line',
@@ -221,7 +273,7 @@
                     data: {
                         labels: ['외인', '기관', '개인'],
                         datasets: [{
-                            data: [25918, 21, -25539],
+                            data: [-11586, -13565, 24696],
                             backgroundColor: (context) => {
                                 const val = context.raw;
                                 return val > 0 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(59, 130, 246, 0.8)';
