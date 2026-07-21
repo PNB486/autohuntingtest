@@ -41,7 +41,7 @@
 
         <header class="mb-10 text-center">
             <h1 class="text-4xl font-extrabold mb-2 gradient-text">국내증시 자동사냥</h1>
-            <p class="text-slate-400 text-lg">주식 시장 현황 | 2026. 07. 21. 12:00</p>
+            <p class="text-slate-400 text-lg">주식 시장 현황 | 2026. 07. 21. 17:00</p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
@@ -55,8 +55,8 @@
                     </div>
                 </div>
                 <div class="flex items-baseline gap-4 mb-6">
-                    <span class="text-5xl font-black text-sky-400">6,711.99</span>
-                    <span class="text-2xl font-bold text-rose-500">▲ 195.72 (+3.00%)</span>
+                    <span class="text-5xl font-black text-sky-400">6,747.95</span>
+                    <span class="text-2xl font-bold text-rose-500">▲ 231.68 (+3.56%)</span>
                 </div>
                 <div class="relative h-[300px]">
                     <canvas id="kospiChart"></canvas>
@@ -78,28 +78,28 @@
                         <tbody class="text-sm">
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">삼성전자 (005930)</td>
-                                <td class="py-4 text-right">258,500</td>
-                                <td class="py-4 text-right text-rose-500">+5.94%</td>
+                                <td class="py-4 text-right">259,000</td>
+                                <td class="py-4 text-right text-rose-500">+6.15%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">SK하이닉스 (000660)</td>
-                                <td class="py-4 text-right">1,834,000</td>
-                                <td class="py-4 text-right text-rose-500">+3.97%</td>
+                                <td class="py-4 text-right">1,836,000</td>
+                                <td class="py-4 text-right text-rose-500">+4.08%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">LG에너지솔루션 (373220)</td>
-                                <td class="py-4 text-right">315,500</td>
-                                <td class="py-4 text-right text-blue-400">-0.63%</td>
+                                <td class="py-4 text-right">317,000</td>
+                                <td class="py-4 text-right text-blue-400">-0.16%</td>
                             </tr>
                             <tr class="border-b border-slate-800/50">
                                 <td class="py-4 font-bold">NAVER (035420)</td>
-                                <td class="py-4 text-right">193,300</td>
-                                <td class="py-4 text-right text-rose-500">+3.98%</td>
+                                <td class="py-4 text-right">193,000</td>
+                                <td class="py-4 text-right text-rose-500">+3.82%</td>
                             </tr>
                             <tr>
                                 <td class="py-4 font-bold">현대차 (005380)</td>
-                                <td class="py-4 text-right">398,500</td>
-                                <td class="py-4 text-right text-blue-400">-0.13%</td>
+                                <td class="py-4 text-right">399,000</td>
+                                <td class="py-4 text-right text-slate-400">+0.00%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -116,15 +116,15 @@
                     <div class="grid grid-cols-1 gap-2 text-xs">
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">외국인</span>
-                            <span class="text-rose-500 font-bold">+1,230억</span>
+                            <span class="text-rose-500 font-bold">+2,952억</span>
                         </div>
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">기관</span>
-                            <span class="text-rose-500 font-bold">+8,149억</span>
+                            <span class="text-rose-500 font-bold">+13,744억</span>
                         </div>
                         <div class="flex justify-between items-center p-2.5 bg-slate-800/50 rounded-xl border border-slate-700">
                             <span class="text-slate-400 font-medium">개인</span>
-                            <span class="text-blue-400 font-bold">-9,400억</span>
+                            <span class="text-blue-400 font-bold">-16,422억</span>
                         </div>
                     </div>
                 </div>
@@ -212,10 +212,10 @@
                 
                 // Intraday and Daily Chart Data Variables (updated dynamically by python)
                 const intradayLabels = ['09:00 (시가)', '장중 최저', '장중 최고', '현재가'];
-                const intradayData = [6553.88, 6429.03, 6738.67, 6711.99];
+                const intradayData = [6553.88, 6429.03, 6836.86, 6747.95];
                 
                 const dailyLabels = ['Tue', 'Wed', 'Thu', 'Mon', 'Tue'];
-                const dailyData = [6856.83, 7284.41, 6820.6, 6516.27, 6711.99];
+                const dailyData = [6856.83, 7284.41, 6820.6, 6516.27, 6747.95];
                 
                 const chart = new Chart(ctx, {
                     type: 'line',
@@ -273,7 +273,7 @@
                     data: {
                         labels: ['외인', '기관', '개인'],
                         datasets: [{
-                            data: [1230, 8149, -9400],
+                            data: [2952, 13744, -16422],
                             backgroundColor: (context) => {
                                 const val = context.raw;
                                 return val > 0 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(59, 130, 246, 0.8)';
