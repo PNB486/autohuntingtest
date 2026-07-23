@@ -292,9 +292,14 @@ def main():
     # 1. Fetch current time in KST
     utc_now = datetime.datetime.utcnow()
     kst_now = utc_now + datetime.timedelta(hours=9)
-    date_str = kst_now.strftime('%Y. %m. %d. %H:%M')
-    date_hyphen = kst_now.strftime('%Y-%m-%d %H:%M')
-    date_korean = f"{kst_now.year}년 {kst_now.month}월 {kst_now.day}일 {kst_now.hour}시 {kst_now.minute:02d}분"
+    if kst_now.hour == 15: # Scheduled 15:00 KST Market Close Update
+        date_str = kst_now.strftime('%Y. %m. %d. 15:00')
+        date_hyphen = kst_now.strftime('%Y-%m-%d 15:00')
+        date_korean = f"{kst_now.year}년 {kst_now.month:02d}월 {kst_now.day:02d}일 15시 00분"
+    else:
+        date_str = kst_now.strftime('%Y. %m. %d. %H:%M')
+        date_hyphen = kst_now.strftime('%Y-%m-%d %H:%M')
+        date_korean = f"{kst_now.year}년 {kst_now.month:02d}월 {kst_now.day:02d}일 {kst_now.hour:02d}시 {kst_now.minute:02d}분"
     print(f"Current KST Time: {date_str}")
     
     # 2. Fetch Macro indices (KOSPI from Naver, USD/KRW and NASDAQ from Yahoo)
